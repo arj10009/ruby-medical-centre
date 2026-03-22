@@ -4,1775 +4,873 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ruby Medical Centre - GP Practice Bridgetown WA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #13131a;
+            --bg-card-hover: #1a1a24;
+            --bg-elevated: #1c1c28;
+            --border: rgba(255,255,255,0.06);
+            --text: #e4e4e7;
+            --text-dim: #71717a;
+            --text-muted: #52525b;
+            --ruby: #e8364e;
+            --ruby-glow: rgba(232,54,78,0.15);
+            --gold: #f5c542;
+            --gold-glow: rgba(245,197,66,0.12);
+            --teal: #2dd4bf;
+            --purple: #a78bfa;
+            --blue: #60a5fa;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 18px;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
+            font-family:'Inter',-apple-system,sans-serif;
+            font-size:15px; line-height:1.6; color:var(--text);
+            background:transparent; overflow-x:hidden;
         }
 
-        /* Top Bar */
+        h1,h2,h3 { font-family:'Playfair Display',Georgia,serif; }
+
+        ::-webkit-scrollbar { width:6px; }
+        ::-webkit-scrollbar-track { background:var(--bg); }
+        ::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes heroSlide { 0%,30%{opacity:1} 33%,97%{opacity:0} 100%{opacity:1} }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+        @keyframes gradientBorder { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes glow { 0%,100%{opacity:0.5} 50%{opacity:1} }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+        .reveal { opacity:0; transform:translateY(25px); transition:all 0.7s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        @media(prefers-reduced-motion:reduce) { .reveal{opacity:1;transform:none;transition:none;} }
+
+        /* ===== TOP BAR ===== */
         .top-bar {
-            background-color: #7a1029;
-            color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            text-align: center;
+            background:rgba(255,255,255,0.03); border-bottom:1px solid var(--border);
+            padding:8px 20px; font-size:12px; font-weight:500;
+            display:flex; justify-content:center; gap:30px; flex-wrap:wrap;
+            color:var(--text-dim); letter-spacing:0.3px;
         }
+        .top-bar div { display:flex; align-items:center; gap:6px; }
+        .top-bar i { font-size:10px; color:var(--ruby); }
+        .top-bar a { color:var(--text-dim); text-decoration:none; transition:color 0.3s; }
+        .top-bar a:hover { color:var(--text); }
 
-        .top-bar a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .top-bar a:hover {
-            opacity: 0.8;
-        }
-
-        /* Header */
+        /* ===== HEADER ===== */
         header {
-            background-color: white;
-            padding: 20px;
-            border-bottom: 4px solid #a01535;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background:rgba(10,10,15,0.8); backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+            padding:14px 24px; position:sticky; top:0; z-index:1000;
+            border-bottom:1px solid var(--border);
         }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
+        .header-container { max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
         .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #a01535;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-family:'Playfair Display',serif; font-size:22px; font-weight:700;
+            color:white; display:flex; align-items:center; gap:10px;
         }
+        .logo i { color:var(--ruby); font-size:16px; }
 
-        nav {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
+        nav { display:flex; gap:2px; background:var(--bg-card); border-radius:12px; padding:4px; border:1px solid var(--border); }
         nav button {
-            background-color: #a01535;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-weight: 600;
+            background:none; color:var(--text-dim); border:none; padding:8px 18px;
+            font-size:13px; font-weight:500; cursor:pointer; border-radius:8px;
+            transition:all 0.3s; font-family:'Inter',sans-serif;
+        }
+        nav button:hover { color:var(--text); background:rgba(255,255,255,0.04); }
+        nav button.active { color:white; background:var(--ruby); font-weight:600; }
+
+        .hamburger { display:none; flex-direction:column; cursor:pointer; background:none; border:none; padding:8px; }
+        .hamburger span { width:20px; height:2px; background:white; margin:3px 0; border-radius:2px; }
+
+        /* ===== GLOBAL BG VIDEO (behind other tabs) ===== */
+        .global-bg-video {
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            object-fit:cover; z-index:-2;
+        }
+        body::after {
+            content:''; position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(10,10,15,0.85); z-index:-1;
+        }
+        /* Hero video sits inside hero, above the global bg */
+        .hero-bg-video {
+            position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
         }
 
-        nav button:hover {
-            background-color: #7a1029;
-        }
+        /* ===== PAGES ===== */
+        .page { display:none; position:relative; }
+        .page.active { display:block; }
 
-        nav button.active {
-            background-color: #7a1029;
-            border-bottom: 4px solid #fff;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 24px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background-color: #a01535;
-            margin: 5px 0;
-            transition: 0.3s;
-        }
-
-        /* Main Content */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Hero Section */
+        /* ===== HERO ===== */
         .hero {
-            background: linear-gradient(135deg, #a01535 0%, #7a1029 100%);
-            color: white;
-            padding: 60px 40px;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 40px;
+            position:relative; height:calc(100vh - 90px); min-height:500px;
+            display:flex; align-items:center; overflow:hidden;
         }
+        .hero-controls {
+            position:absolute; bottom:30px; right:30px; z-index:3;
+            display:flex; gap:12px;
+        }
+        .hero-ctrl-btn {
+            width:60px; height:60px; border-radius:50%;
+            background:var(--ruby);
+            border:3px solid rgba(255,255,255,0.3); color:white;
+            font-size:24px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+            transition:all 0.3s; box-shadow:0 4px 20px rgba(232,54,78,0.5);
+        }
+        .hero-ctrl-btn:hover { background:#f04060; transform:scale(1.15); box-shadow:0 4px 35px rgba(232,54,78,0.8); }
+        /* hero-bg-video replaced by global-bg-video */
+        .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(135deg, rgba(10,10,15,0.65), rgba(10,10,15,0.35) 50%, rgba(10,10,15,0.6)); }
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
+        .hero-content { position:relative; z-index:2; max-width:1400px; margin:0 auto; padding:0 60px; width:100%; display:grid; grid-template-columns:1fr auto; align-items:center; gap:40px; }
+        .hero-text { max-width:480px; }
+        .hero-label {
+            display:inline-flex; align-items:center; gap:8px;
+            background:var(--ruby-glow); border:1px solid rgba(232,54,78,0.2);
+            color:var(--ruby); font-size:11px; font-weight:600; letter-spacing:2px;
+            text-transform:uppercase; padding:6px 16px; border-radius:100px; margin-bottom:20px;
         }
-
-        .hero .tagline {
-            font-size: 20px;
-            margin-bottom: 30px;
-            line-height: 1.8;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
+        .hero-label i { font-size:6px; animation:glow 2s infinite; }
+        .hero-text h1 { font-size:46px; font-weight:800; color:white; line-height:1.1; margin-bottom:14px; letter-spacing:-2px; }
+        .hero-text h1 span { color:var(--ruby); font-style:italic; }
+        .hero-text .tagline { font-size:14px; font-weight:300; color:var(--text-dim); line-height:1.7; margin-bottom:24px; }
+        .hero-cta { display:flex; gap:12px; flex-wrap:wrap; }
 
         .btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            padding:14px 32px; font-size:13px; border:none; border-radius:10px;
+            cursor:pointer; font-weight:600; font-family:'Inter',sans-serif;
+            letter-spacing:0.5px; transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
+            display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+        }
+        .btn-ruby { background:var(--ruby); color:white; }
+        .btn-ruby:hover { background:#f04060; transform:translateY(-2px); box-shadow:0 8px 25px rgba(232,54,78,0.3); color:white; }
+        .btn-ghost { background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--border); }
+        .btn-ghost:hover { background:rgba(255,255,255,0.1); transform:translateY(-2px); color:white; }
+
+        /* hero-video removed — now using background video */
+        .hero-cards {
+            display:flex; flex-direction:column; gap:10px; min-width:260px;
+        }
+        .hero-info-card {
+            background:rgba(255,255,255,0.04); backdrop-filter:blur(10px);
+            border:1px solid var(--border); border-radius:12px; padding:14px 18px;
+            display:flex; align-items:center; gap:14px;
+            transition:all 0.4s; cursor:default;
+        }
+        .hero-info-card:hover { background:rgba(255,255,255,0.07); border-color:rgba(255,255,255,0.1); transform:translateX(-4px); }
+        .hero-info-icon {
+            width:44px; height:44px; border-radius:12px;
+            display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+        }
+        .hero-info-card:nth-child(1) .hero-info-icon { background:var(--ruby-glow); color:var(--ruby); }
+        .hero-info-card:nth-child(2) .hero-info-icon { background:var(--gold-glow); color:var(--gold); }
+        .hero-info-card:nth-child(3) .hero-info-icon { background:rgba(45,212,191,0.12); color:var(--teal); }
+        .hero-info-card:nth-child(4) .hero-info-icon { background:rgba(167,139,250,0.12); color:var(--purple); }
+        .hero-info-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:500; }
+        .hero-info-value { font-size:15px; color:var(--text); font-weight:500; }
+        .hero-info-value a { color:var(--text); text-decoration:none; }
+        .hero-info-value a:hover { color:white; }
+
+        /* ===== CONTAINER ===== */
+        .container { max-width:1400px; margin:0 auto; padding:0 40px; }
+
+        /* ===== INNER TAB PAGES ===== */
+        .tab-page {
+            min-height:calc(100vh - 90px);
+            padding:40px 0;
+            display:flex;
+            flex-direction:column;
         }
 
-        .btn-primary {
-            background-color: white;
-            color: #a01535;
+        .page-header {
+            display:flex; align-items:center; justify-content:space-between;
+            margin-bottom:30px; flex-wrap:wrap; gap:16px;
+        }
+        .page-header-left {}
+        .page-label {
+            font-size:11px; font-weight:600; color:var(--ruby); text-transform:uppercase;
+            letter-spacing:2px; margin-bottom:6px;
+        }
+        .page-title { font-size:36px; font-weight:700; color:white; letter-spacing:-1px; }
+
+        /* ===== ABOUT GRID ===== */
+        .about-grid {
+            display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; flex:1;
+        }
+        .about-card {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:16px; padding:24px; cursor:pointer;
+            transition:all 0.4s; position:relative; overflow:hidden;
+        }
+        .about-card:hover { background:var(--bg-card-hover); border-color:rgba(255,255,255,0.1); transform:translateY(-2px); }
+        .about-card h3 {
+            font-family:'Inter',sans-serif; font-size:15px; font-weight:600;
+            color:white; margin-bottom:8px; display:flex; align-items:center;
+            justify-content:space-between;
+        }
+        .about-card h3 i { font-size:10px; color:var(--text-muted); transition:all 0.3s; }
+        .about-card:hover h3 i { color:var(--ruby); transform:rotate(180deg); }
+        .about-card p {
+            font-size:13px; color:var(--text-dim); line-height:1.7;
+            max-height:0; overflow:hidden; transition:max-height 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .about-card.active p { max-height:800px; margin-top:8px; }
+        .about-card-tag {
+            display:inline-block; font-size:10px; font-weight:600;
+            padding:3px 10px; border-radius:100px; margin-bottom:10px;
+            text-transform:uppercase; letter-spacing:1px;
+        }
+        .tag-info { background:rgba(96,165,250,0.12); color:var(--blue); }
+        .tag-fees { background:var(--gold-glow); color:var(--gold); }
+        .tag-policy { background:rgba(167,139,250,0.12); color:var(--purple); }
+        .tag-billing { background:rgba(45,212,191,0.12); color:var(--teal); }
+        .tag-feedback { background:var(--ruby-glow); color:var(--ruby); }
+
+        /* About card expanded content */
+        .about-card table { width:100%; border-collapse:collapse; margin:10px 0; font-size:13px; }
+        .about-card table th { background:rgba(255,255,255,0.04); color:var(--text-dim); padding:8px 12px; text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; }
+        .about-card table td { padding:8px 12px; border-bottom:1px solid var(--border); color:var(--text-dim); }
+        .about-card ul { margin-left:16px; margin-top:8px; }
+        .about-card li { font-size:13px; color:var(--text-dim); margin-bottom:4px; }
+        .about-card a { color:var(--ruby); }
+
+        /* ===== SERVICES GRID (pyramid: 4-3-2-1) ===== */
+        .services-grid {
+            display:flex; flex-wrap:wrap; justify-content:center; gap:14px; flex:1;
+        }
+        .services-row {
+            display:flex; gap:14px; width:100%; justify-content:center;
+        }
+        .services-row .service-card {
+            flex:0 1 200px;
+        }
+        .service-card {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:16px; overflow:hidden;
+            transition:all 0.4s; cursor:pointer; position:relative;
+        }
+        .service-card:hover { background:var(--bg-card-hover); border-color:rgba(255,255,255,0.1); transform:translateY(-3px); }
+        .service-card img {
+            width:100%; height:110px; object-fit:contain; background:rgba(255,255,255,0.05);
+            filter:brightness(0.8); transition:filter 0.4s;
+        }
+        .service-card:hover img { filter:brightness(0.8); }
+        .service-card-body { padding:10px 14px; }
+        .service-card-body h3 { font-family:'Inter',sans-serif; font-size:15px; font-weight:600; color:white; margin-bottom:6px; }
+        .service-card-body p {
+            font-size:12px; color:var(--text-dim); line-height:1.6;
+            max-height:0; overflow:hidden; transition:max-height 0.5s;
+        }
+        .service-card.active .service-card-body p { max-height:300px; }
+        .service-card-expand {
+            font-size:10px; color:var(--text-muted); margin-top:6px;
+            display:flex; align-items:center; gap:4px;
+        }
+        .service-card-expand i { transition:transform 0.3s; }
+        .service-card.active .service-card-expand i { transform:rotate(180deg); }
+
+        /* ===== DOCTORS ===== */
+        /* ===== TEAM GRID ===== */
+        .team-grid {
+            display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;
+        }
+        .team-member {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:16px; overflow:visible; position:relative;
+            transition:all 0.5s cubic-bezier(0.16,1,0.3,1); cursor:pointer;
+        }
+        .team-member-img-wrap {
+            border-radius:16px 16px 0 0; overflow:hidden;
+        }
+        .team-member:hover {
+            border-color:rgba(255,255,255,0.15);
+            box-shadow:0 20px 50px rgba(0,0,0,0.4);
+            transform:scale(1.03);
+            z-index:10;
+        }
+        .team-member-img {
+            width:100%; height:180px; object-fit:contain; object-position:center top;
+            background:var(--bg-elevated);
+            filter:brightness(0.85); transition:all 0.5s;
+        }
+        .team-member:hover .team-member-img { filter:brightness(1); }
+        .team-member-placeholder {
+            width:100%; height:160px; background:var(--bg-elevated);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--text-muted); font-size:11px; transition:height 0.5s;
+        }
+        .team-member:hover .team-member-placeholder { height:180px; }
+        .team-member-info { padding:14px 16px; background:var(--bg-card); border-radius:0 0 16px 16px; position:relative; z-index:1; }
+        .team-member-name { font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:white; margin-bottom:2px; }
+        .team-member-role { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+        .role-doctor { color:var(--ruby); }
+        .role-nurse { color:var(--teal); }
+        .role-allied { color:var(--purple); }
+        .role-phlebotomy { color:var(--gold); }
+        .role-reception { color:var(--blue); }
+        .team-member-quals { font-size:10px; color:var(--text-muted); font-style:italic; margin-bottom:4px; }
+        .team-member-bio { display:none; }
+        .team-member:hover { z-index:10; }
+
+        /* Hover overlay backdrop */
+        .team-overlay {
+            position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+            z-index:999; opacity:0; pointer-events:none;
+            transition:opacity 0.3s ease;
+        }
+        .team-overlay.active { opacity:1; pointer-events:all; }
+
+        /* Centered modal popup */
+        .team-member-popup {
+            position:fixed; top:50%; left:50%;
+            transform:translate(-50%, -50%) scale(0.9);
+            width:420px; max-width:90vw; background:var(--bg-elevated); border:1px solid rgba(255,255,255,0.12);
+            border-radius:20px; padding:32px; z-index:1000;
+            opacity:0; pointer-events:none;
+            transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
+            box-shadow:0 30px 80px rgba(0,0,0,0.8);
+        }
+        .team-member-popup.active {
+            opacity:1; pointer-events:all; transform:translate(-50%, -50%) scale(1);
+        }
+        .popup-close {
+            position:absolute; top:12px; right:16px;
+            background:none; border:none; color:var(--text-dim);
+            font-size:24px; cursor:pointer; line-height:1;
+            transition:color 0.2s;
+        }
+        .popup-close:hover { color:var(--text); }
+        .popup-header { display:flex; gap:14px; align-items:flex-start; margin-bottom:12px; }
+        .popup-photo { width:70px; height:70px; object-fit:cover; border-radius:12px; flex-shrink:0; }
+        .popup-photo-placeholder {
+            width:70px; height:70px; border-radius:12px; background:var(--bg-card);
+            display:flex; align-items:center; justify-content:center; color:var(--text-muted);
+            font-size:10px; flex-shrink:0;
+        }
+        .popup-name { font-family:'Inter',sans-serif; font-size:16px; font-weight:700; color:white; margin-bottom:3px; }
+        .popup-role { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .popup-quals { font-size:11px; color:var(--text-muted); font-style:italic; }
+        .popup-bio { font-size:13px; color:var(--text-dim); line-height:1.7; }
+
+        .team-member-dot {
+            position:absolute; top:12px; right:12px; width:8px; height:8px;
+            border-radius:50%; border:2px solid var(--bg-card);
         }
 
-        .btn-primary:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
+        /* ===== CONTACT ===== */
+        .contact-layout {
+            display:grid; grid-template-columns:1fr 1.5fr; gap:24px; flex:1;
         }
-
-        .btn-outline {
-            background-color: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-outline:hover {
-            background-color: white;
-            color: #a01535;
-            transform: translateY(-2px);
-        }
-
-        .bulk-billing-badge {
-            background-color: white;
-            color: #a01535;
-            padding: 20px 40px;
-            border-radius: 10px;
-            font-size: 20px;
-            font-weight: 700;
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        /* Info Cards */
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .info-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            border-top: 4px solid #a01535;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .info-card-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .info-card h3 {
-            color: #a01535;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .info-card p {
-            color: #666;
-            word-break: break-word;
-        }
-
-        .info-card a {
-            color: #a01535;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .info-card a:hover {
-            text-decoration: underline;
-        }
-
-        /* Section Titles */
-        h2 {
-            color: #a01535;
-            font-size: 36px;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #a01535;
-            padding-bottom: 15px;
-        }
-
-        h3 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        /* About Section */
-        .about-intro {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #a01535;
-            font-size: 18px;
-            line-height: 1.8;
-        }
-
-        /* Accordion */
-        .accordion {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .accordion-header {
-            background-color: #f5f5f5;
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 5px solid #a01535;
-            transition: background-color 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background-color: #e8e8e8;
-        }
-
-        .accordion-header h3 {
-            margin: 0;
-            font-size: 22px;
-            color: #a01535;
-        }
-
-        .accordion-toggle {
-            font-size: 24px;
-            color: #a01535;
-            transition: transform 0.3s ease;
-        }
-
-        .accordion.active .accordion-toggle {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .accordion.active .accordion-content {
-            max-height: 2000px;
-        }
-
-        .accordion-body {
-            padding: 30px;
-            background-color: white;
-            line-height: 1.8;
-        }
-
-        .accordion-body p {
-            margin-bottom: 15px;
-        }
-
-        .accordion-body ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .accordion-body li {
-            margin-bottom: 10px;
-        }
-
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-        }
-
-        table thead {
-            background-color: #a01535;
-            color: white;
-        }
-
-        table th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        table tbody tr:hover {
-            background-color: #f0f0f0;
-        }
-
-        /* Footnote */
-        .footnote {
-            background-color: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        /* Services Grid */
-        .service-item {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .service-header {
-            padding: 20px;
-            cursor: pointer;
-            background-color: #f5f5f5;
-            border-left: 5px solid #a01535;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.3s ease;
-        }
-
-        .service-header:hover {
-            background-color: #e8e8e8;
-        }
-
-        .service-header h3 {
-            margin: 0;
-            color: #a01535;
-            font-size: 22px;
-        }
-
-        .service-toggle {
-            font-size: 24px;
-            color: #a01535;
-            transition: transform 0.3s ease;
-        }
-
-        .service-item.active .service-toggle {
-            transform: rotate(180deg);
-        }
-
-        .service-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .service-item.active .service-content {
-            max-height: 2000px;
-        }
-
-        .service-body {
-            padding: 30px;
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .service-photo {
-            width: 100%;
-            max-width: 300px;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-
-        .service-description {
-            flex: 1;
-        }
-
-        /* Doctors Section */
-        .doctor-category {
-            margin-bottom: 40px;
-        }
-
-        .category-title {
-            font-size: 28px;
-            color: #a01535;
-            margin: 30px 0 20px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #a01535;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .category-icon {
-            font-size: 32px;
-        }
-
-        .doctor-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: flex;
-            gap: 30px;
-            align-items: flex-start;
-        }
-
-        .doctor-photo {
-            max-width: 280px;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-
-        .photo-placeholder {
-            max-width: 280px;
-            width: 280px;
-            height: 180px;
-            border: 3px dashed #ccc;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #999;
-            font-weight: 600;
-            background-color: #f9f9f9;
-            flex-shrink: 0;
-        }
-
-        .doctor-info {
-            flex: 1;
-        }
-
-        .doctor-info h3 {
-            color: #a01535;
-            margin-bottom: 5px;
-        }
-
-        .doctor-title {
-            color: #7a1029;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .doctor-qualifications {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .doctor-bio {
-            color: #333;
-            line-height: 1.8;
-        }
-
-        /* Contact Section */
-        .contact-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
+        .contact-left { display:flex; flex-direction:column; gap:14px; }
         .contact-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            border-top: 4px solid #a01535;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:16px; padding:24px; display:flex; align-items:center; gap:16px;
+            transition:all 0.4s;
         }
-
-        .contact-card-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+        .contact-card:hover { background:var(--bg-card-hover); border-color:rgba(255,255,255,0.1); }
+        .contact-icon {
+            width:48px; height:48px; border-radius:14px;
+            display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;
         }
+        .contact-card:nth-child(1) .contact-icon { background:var(--ruby-glow); color:var(--ruby); }
+        .contact-card:nth-child(2) .contact-icon { background:var(--gold-glow); color:var(--gold); }
+        .contact-card:nth-child(3) .contact-icon { background:rgba(45,212,191,0.12); color:var(--teal); }
+        .contact-label { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; font-weight:500; }
+        .contact-value { font-size:16px; color:white; font-weight:500; }
+        .contact-value a { color:white; text-decoration:none; }
+        .contact-value a:hover { color:var(--ruby); }
 
-        .contact-card h3 {
-            color: #a01535;
-            margin-bottom: 10px;
+        .contact-cta {
+            background:linear-gradient(135deg,var(--ruby),#c01030);
+            border-radius:16px; padding:28px; text-align:center; margin-top:auto;
         }
+        .contact-cta h3 { font-family:'Inter',sans-serif; font-size:18px; font-weight:700; color:white; margin-bottom:8px; }
+        .contact-cta p { font-size:13px; color:rgba(255,255,255,0.7); margin-bottom:16px; }
+        .contact-cta .btn { width:100%; justify-content:center; background:white; color:var(--ruby); }
+        .contact-cta .btn:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,0,0,0.3); }
 
-        .contact-card a {
-            color: #a01535;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
+        .map-container { border-radius:16px; overflow:hidden; border:1px solid var(--border); height:100%; min-height:400px; }
+        .map-container iframe { width:100%; height:100%; border:none; min-height:400px; filter:brightness(0.8) contrast(1.1); }
+
+        /* ===== BULK BILLING BANNER ===== */
+        .billing-banner {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:16px; padding:20px 28px; display:flex;
+            align-items:center; gap:16px; margin-top:16px;
         }
+        .billing-banner i { font-size:24px; color:var(--teal); }
+        .billing-banner span { font-size:13px; font-weight:600; color:var(--text); letter-spacing:0.5px; }
 
-        .contact-card a:hover {
-            text-decoration: underline;
+        /* ===== VIDEO EMBED ===== */
+        .video-container {
+            position:relative; width:100%; padding-bottom:56.25%;
+            border-radius:16px; overflow:hidden; border:1px solid var(--border);
         }
+        .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
 
-        .map-container {
-            margin-top: 40px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 400px;
-            border: none;
-        }
-
-        /* Footer */
+        /* ===== FOOTER ===== */
         footer {
-            background-color: #7a1029;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 60px;
-            font-size: 16px;
+            background:var(--bg-card); border-top:1px solid var(--border);
+            padding:20px; text-align:center;
         }
+        .footer-text { font-size:12px; color:var(--text-muted); }
+        .footer-text a { color:var(--text-dim); text-decoration:none; }
+        .footer-text a:hover { color:var(--ruby); }
 
-        footer a {
-            color: #fff;
-            text-decoration: none;
+        /* ===== PROFILE MODAL ===== */
+        .profile-overlay {
+            position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+            z-index:2000; display:flex; align-items:center; justify-content:center;
+            opacity:0; pointer-events:none; transition:opacity 0.3s;
         }
-
-        footer a:hover {
-            text-decoration: underline;
+        .profile-overlay.active { opacity:1; pointer-events:all; }
+        .profile-modal {
+            background:var(--bg-card); border:1px solid var(--border);
+            border-radius:20px; max-width:700px; width:90%; max-height:85vh;
+            overflow-y:auto; padding:36px; position:relative;
+            transform:translateY(20px) scale(0.97); transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
+        .profile-overlay.active .profile-modal { transform:translateY(0) scale(1); }
+        .profile-close {
+            position:absolute; top:16px; right:16px; width:36px; height:36px;
+            border-radius:10px; background:rgba(255,255,255,0.06); border:1px solid var(--border);
+            color:var(--text-dim); font-size:14px; cursor:pointer; display:flex;
+            align-items:center; justify-content:center; transition:all 0.3s;
+        }
+        .profile-close:hover { background:var(--ruby); color:white; border-color:var(--ruby); }
+        .profile-top { display:flex; gap:24px; align-items:flex-start; margin-bottom:20px; }
+        .profile-photo { width:120px; height:120px; object-fit:cover; object-position:center 20%; border-radius:16px; flex-shrink:0; }
+        .profile-photo-placeholder {
+            width:120px; height:120px; border-radius:16px; background:var(--bg-elevated);
+            display:flex; align-items:center; justify-content:center; color:var(--text-muted);
+            font-size:12px; flex-shrink:0;
+        }
+        .profile-name { font-family:'Inter',sans-serif; font-size:22px; font-weight:700; color:white; margin-bottom:4px; }
+        .profile-role { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
+        .profile-quals { font-size:13px; color:var(--text-muted); font-style:italic; margin-bottom:8px; }
+        .profile-bio { font-size:15px; color:var(--text-dim); line-height:1.9; }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:900px) {
+            .hamburger { display:flex; }
             nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: white;
-                flex-direction: column;
-                width: 100%;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                display:none; position:absolute; top:100%; left:0; right:0;
+                background:var(--bg-card); border:1px solid var(--border);
+                flex-direction:column; border-radius:0 0 12px 12px; padding:8px;
             }
-
-            nav.active {
-                display: flex;
-            }
-
-            nav button {
-                border-radius: 0;
-                border: none;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .logo {
-                font-size: 22px;
-            }
-
-            .hero {
-                padding: 40px 20px;
-            }
-
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero .tagline {
-                font-size: 18px;
-            }
-
-            .hero .cta-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            h2 {
-                font-size: 28px;
-            }
-
-            .service-body {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .service-photo {
-                max-width: 100%;
-            }
-
-            .doctor-card {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .doctor-photo,
-            .photo-placeholder {
-                margin: 0 auto;
-            }
-
-            .top-bar {
-                gap: 15px;
-            }
-
-            .header-container {
-                justify-content: space-between;
-            }
+            nav.active { display:flex; }
+            .hero { height:auto; min-height:auto; padding:40px 0; }
+            .hero-content { grid-template-columns:1fr; padding:0 24px; }
+            .hero-text h1 { font-size:36px; }
+            .hero-cards { min-width:auto; width:100%; }
+            .about-grid { grid-template-columns:1fr; }
+            .services-row { flex-wrap:wrap; justify-content:center; }
+            .services-row .service-card { flex:0 1 45% !important; }
+            .team-grid { grid-template-columns:repeat(2,1fr); }
+            .contact-layout { grid-template-columns:1fr; }
+            .container { padding:0 20px; }
+            .page-title { font-size:28px; }
         }
-
-        @media (max-width: 480px) {
-            body {
-                font-size: 16px;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .hero .tagline {
-                font-size: 16px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            h3 {
-                font-size: 20px;
-            }
-
-            main {
-                padding: 20px 10px;
-            }
-
-            .info-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .accordion-header,
-            .service-header {
-                padding: 15px;
-            }
-
-            .accordion-body,
-            .service-body {
-                padding: 20px;
-            }
-
-            table {
-                font-size: 16px;
-            }
-
-            table th,
-            table td {
-                padding: 10px;
-            }
-
-            .top-bar {
-                flex-direction: column;
-                gap: 8px;
-                font-size: 14px;
-            }
+        @media(max-width:600px) {
+            .services-row .service-card { max-width:100% !important; }
+            .top-bar { flex-direction:column; gap:4px; font-size:11px; }
+            .hero-text h1 { font-size:30px; }
         }
     </style>
 </head>
 <body>
+
     <!-- Top Bar -->
+    <!-- Global background video -->
+    <video class="global-bg-video" autoplay muted loop playsinline>
+        <source src="Rubymedicalcentre.mp4" type="video/mp4">
+    </video>
+
     <div class="top-bar">
-        <div>📞 <a href="tel:0897866000">0897 866 000</a></div>
-        <div>📧 <a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></div>
-        <div>📍 128 Hampton Street, Bridgetown WA 6255</div>
+        <div><i class="fa-solid fa-phone"></i> <a href="tel:0897866000">0897 866 000</a></div>
+        <div><i class="fa-solid fa-envelope"></i> <a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></div>
+        <div><i class="fa-solid fa-location-dot"></i> 128 Hampton Street, Bridgetown WA 6255</div>
     </div>
 
     <!-- Header -->
     <header>
         <div class="header-container">
-            <div class="logo">💎 Ruby Medical Centre</div>
-            <button class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="logo"><i class="fa-solid fa-gem"></i> Ruby Medical</div>
+            <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
             <nav id="nav-menu">
                 <button class="nav-btn active" data-page="home">Home</button>
                 <button class="nav-btn" data-page="about">About</button>
                 <button class="nav-btn" data-page="services">Services</button>
-                <button class="nav-btn" data-page="doctors">Our Doctors</button>
+                <button class="nav-btn" data-page="doctors">Team</button>
                 <button class="nav-btn" data-page="contact">Contact</button>
             </nav>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- HOME PAGE -->
-        <div id="home" class="page active">
-            <!-- Hero Section -->
-            <div class="hero">
-                <h1>Ruby Medical Centre</h1>
-                <p class="tagline">The newly born medical practice in Bridgetown, servicing the local community and surrounding suburbs through highly experienced General Practitioners, nurses, and allied health professionals.</p>
-                <div class="cta-buttons">
-                    <a href="https://healthengine.com.au/medical-centre/wa/bridgetown/ruby-medical-centre/s85752" target="_blank" class="btn btn-primary" style="text-decoration:none;">Book an Appointment</a>
-                    <a href="tel:0897866000" class="btn btn-outline">Call Us</a>
-                </div>
-                <div class="bulk-billing-badge">🏥 WE ARE A MEDICARE BULK BILLING PRACTICE</div>
+    <!-- ========== HOME ========== -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <video class="hero-bg-video" autoplay muted loop playsinline>
+                <source src="Rubymedicalcentre.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="hero-controls">
+                <button class="hero-ctrl-btn" id="heroPlayBtn" onclick="document.querySelectorAll('video').forEach(v=>{if(v.paused)v.play();else v.pause()});this.innerHTML=document.querySelector('.hero-bg-video').paused?'<i class=\'fa-solid fa-play\'></i>':'<i class=\'fa-solid fa-pause\'></i>'">
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <button class="hero-ctrl-btn" id="heroMuteBtn" onclick="document.querySelectorAll('video').forEach(v=>{v.muted=!v.muted});const m=document.querySelector('.hero-bg-video').muted;this.innerHTML=m?'<i class=\'fa-solid fa-volume-xmark\'></i>':'<i class=\'fa-solid fa-volume-high\'></i>'">
+                    <i class="fa-solid fa-volume-xmark"></i>
+                </button>
             </div>
-
-            <!-- Info Cards -->
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="info-card-icon">📞</div>
-                    <h3>Phone</h3>
-                    <p><a href="tel:0897866000">0897 866 000</a></p>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-icon">📧</div>
-                    <h3>Email</h3>
-                    <p><a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></p>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-icon">📍</div>
-                    <h3>Address</h3>
-                    <p>128 Hampton Street<br>Bridgetown WA 6255</p>
-                </div>
-            </div>
-
-            <!-- Video Section -->
-            <div style="margin-bottom: 40px;">
-                <div style="position: relative; width: 100%; padding-bottom: 56.25%; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <iframe src="https://www.youtube.com/embed/sdN_tjXK0jQ" title="Ruby Medical Centre" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                </div>
-            </div>
-
-            <!-- About Us Section -->
-            <h2>About Us</h2>
-            <div class="about-intro">
-                <p><strong>Ruby Medical Centre is very conveniently located in the heart of the town in the bustling shopping area amongst other buildings. There is ample public parking available in and around the area, including the public parking area next to the bakery nearby, and a few reserved parking spaces behind the surgery.</strong></p>
-                <p style="margin-top: 15px;"><strong>In addition to doctor's consultation rooms, this purpose-built medical centre houses Pathology, Psychology, Audiology and Physiotherapy, and is co-located with the Pharmacy on Hampton Street, Bridgetown.</strong></p>
-            </div>
-        </div>
-
-        <!-- ABOUT PAGE -->
-        <div id="about" class="page">
-            <h2>About Ruby Medical Centre</h2>
-
-            <div class="about-intro">
-                Ruby Medical Centre is very conveniently located in the heart of the town in the bustling shopping area amongst other buildings.
-            </div>
-
-            <!-- Parking Accordion -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Parking</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>There is public parking available in and around the area – There is parallel street parking on Hampton Street, there is a parking bay next to the Bakery south of the clinic (approx. 2 minutes' walk), across the road from the surgery behind IGA, and Shire parking north of the clinic (approx. 1 minute walk). Patients with disability, particularly those who require wheelchair access, who are having any issues finding parking, are encouraged to contact the clinic and we can arrange alternative options for you. In addition to doctor's consultation rooms and treatment room, this purpose-built medical centre houses Pathology, Psychology, Audiology and Osteopathy, and is co-located with the 777 Pharmacy on Hampton Street.</p>
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-label"><i class="fa-solid fa-circle"></i> Bridgetown, Western Australia</div>
+                    <h1>Your Health,<br>Our <span>Priority</span></h1>
+                    <p class="tagline">Comprehensive healthcare through experienced GPs, nurses, and allied health professionals — proudly bulk billing.</p>
+                    <div class="hero-cta">
+                        <a href="https://healthengine.com.au/medical-centre/wa/bridgetown/ruby-medical-centre/s85752" target="_blank" class="btn btn-ruby"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+                        <a href="tel:0897866000" class="btn btn-ghost"><i class="fa-solid fa-phone"></i> Call Us</a>
                     </div>
                 </div>
-            </div>
-
-            <!-- Service Fees Normal Hours -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Service Fees – Normal Hours</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Hours: Mon–Fri 8am–5pm</strong></p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Service</th>
-                                    <th>Non-Medicare Concession Fee</th>
-                                    <th>Non-Medicare Fee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>23 – Standard Consultation</td>
-                                    <td>$45</td>
-                                    <td>$90</td>
-                                </tr>
-                                <tr>
-                                    <td>36 – Long Consultation</td>
-                                    <td>$60</td>
-                                    <td>$145</td>
-                                </tr>
-                                <tr>
-                                    <td>44 – Extended Consultation</td>
-                                    <td>$75</td>
-                                    <td>$200</td>
-                                </tr>
-                                <tr>
-                                    <td>91891 – Telehealth</td>
-                                    <td>$30</td>
-                                    <td>$75</td>
-                                </tr>
-                                <tr>
-                                    <td>Medical Certificate</td>
-                                    <td>$10</td>
-                                    <td>$20</td>
-                                </tr>
-                                <tr>
-                                    <td>Repeat Script</td>
-                                    <td>N/A</td>
-                                    <td>N/A</td>
-                                </tr>
-                                <tr>
-                                    <td>Fitness to Drive Medical – Commercial (HR) etc.</td>
-                                    <td>N/A</td>
-                                    <td>$160</td>
-                                </tr>
-                                <tr>
-                                    <td>Aviation Medical</td>
-                                    <td>N/A</td>
-                                    <td>$210</td>
-                                </tr>
-                                <tr>
-                                    <td>Firearms Assessment</td>
-                                    <td>N/A</td>
-                                    <td>$250</td>
-                                </tr>
-                                <tr>
-                                    <td>Pre-Employment Medical Assessment – Payment upfront</td>
-                                    <td>N/A</td>
-                                    <td>$160</td>
-                                </tr>
-                                <tr>
-                                    <td>Worker's Compensation – 1st Visit: Patient to pay up front</td>
-                                    <td>N/A</td>
-                                    <td>Fee varies</td>
-                                </tr>
-                                <tr>
-                                    <td>Transfer of Records – Health Summary</td>
-                                    <td>$15.00</td>
-                                    <td>N/A</td>
-                                </tr>
-                                <tr>
-                                    <td>Transfer of Records – Full History & Investigations</td>
-                                    <td>Price on request</td>
-                                    <td>N/A</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="hero-cards">
+                    <div class="hero-info-card">
+                        <div class="hero-info-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div><div class="hero-info-label">Phone</div><div class="hero-info-value"><a href="tel:0897866000">0897 866 000</a></div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Service Fees After Hours -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Service Fees – After Hours</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Hours: Mon–Fri before 8am/after 6pm, Sat before 8am/after 1pm, Sun/Public Holidays all day</strong></p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Service</th>
-                                    <th>Fee</th>
-                                    <th>Medicare Rebate</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>5020 – Standard Consultation</td>
-                                    <td>$103.80</td>
-                                    <td>$55.80</td>
-                                </tr>
-                                <tr>
-                                    <td>5040 – Long Consultation</td>
-                                    <td>$155.70</td>
-                                    <td>$95.70</td>
-                                </tr>
-                                <tr>
-                                    <td>5060 – Extended Consultation</td>
-                                    <td>$209.20</td>
-                                    <td>$134.20</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="hero-info-card">
+                        <div class="hero-info-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div><div class="hero-info-label">Email</div><div class="hero-info-value"><a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Procedures & Consumables -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Procedures & Consumables Information</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Procedures (excisions, biopsies, implanon insertion, iron infusion, etc.)</strong> – Some procedures involve a consumables fee which is NOT included in the consultation fee. Please see the consumables price list below.</p>
-                        <p>For general, non-commercial consultations – Dr Nandhini Rangarajan bulk bills for Pensioner Concession Card holders, Health Care Card holders, Commonwealth Seniors Health Card holders, Veteran Affairs card holders, cervical screenings, and patients 16 years & under.</p>
-                        <p><em>Please note – These patients will still need to pay for any consumables used during procedures e.g., excisions, biopsies, implanon insertion, iron infusion, etc.</em></p>
-                        <ul>
-                            <li>Payments are required on the day by cash or Eftpos.</li>
-                            <li>All fees and charges are at the Doctor's discretion.</li>
-                            <li>Please notify us at least 3 hours prior to cancelling your appointment.</li>
-                            <li>Failure to attend an appointment may incur a missed appointment fee.</li>
-                        </ul>
+                    <div class="hero-info-card">
+                        <div class="hero-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div><div class="hero-info-label">Address</div><div class="hero-info-value">128 Hampton St, Bridgetown</div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Schedule of Fees Consumables -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Schedule of Fees – Consumables</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Consumable fees are not covered by Medicare or concession cards and are an added fee to the Doctor's time to cover our treatment room & procedure consumables expenses. Please feel free to discuss the cost with staff before the procedure commences.</strong></p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Procedure</th>
-                                    <th>Consumable Fee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Biopsy (punch / shave)</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>Cosmetic excision</td>
-                                    <td>$120</td>
-                                </tr>
-                                <tr>
-                                    <td>Suture removal (not from Ruby Medical Centre)</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>Excision – small (≤ 10 mm)</td>
-                                    <td>$60</td>
-                                </tr>
-                                <tr>
-                                    <td>Excision – medium (11–20 mm)</td>
-                                    <td>$80</td>
-                                </tr>
-                                <tr>
-                                    <td>Excision – large (21–30 mm)</td>
-                                    <td>$100</td>
-                                </tr>
-                                <tr>
-                                    <td>Excision – large (> 30 mm)</td>
-                                    <td>$120</td>
-                                </tr>
-                                <tr>
-                                    <td>Flap repair</td>
-                                    <td>$120</td>
-                                </tr>
-                                <tr>
-                                    <td>Curettage / diathermy</td>
-                                    <td>$60</td>
-                                </tr>
-                                <tr>
-                                    <td>Implanon insertion</td>
-                                    <td>$40</td>
-                                </tr>
-                                <tr>
-                                    <td>Implanon removal</td>
-                                    <td>$40</td>
-                                </tr>
-                                <tr>
-                                    <td>Implanon removal & insertion</td>
-                                    <td>$60</td>
-                                </tr>
-                                <tr>
-                                    <td>Mirena / IUD insertion</td>
-                                    <td>$100</td>
-                                </tr>
-                                <tr>
-                                    <td>Mirena / IUD removal</td>
-                                    <td>$40</td>
-                                </tr>
-                                <tr>
-                                    <td>Mirena / IUD removal & insertion</td>
-                                    <td>$120</td>
-                                </tr>
-                                <tr>
-                                    <td>Iron infusion</td>
-                                    <td>$100</td>
-                                </tr>
-                                <tr>
-                                    <td>Cryotherapy</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>Ear syringing</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>ECG</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>24-hour BP monitor</td>
-                                    <td>$50</td>
-                                </tr>
-                                <tr>
-                                    <td>Spirometry</td>
-                                    <td>$20</td>
-                                </tr>
-                                <tr>
-                                    <td>Ear irrigation</td>
-                                    <td>$30</td>
-                                </tr>
-                                <tr>
-                                    <td>Dressing change – small</td>
-                                    <td>$15</td>
-                                </tr>
-                                <tr>
-                                    <td>Dressing change – large</td>
-                                    <td>$30</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="footnote">
-                            <strong>Note:</strong> Pensioner Concession card holders, Health Care card holders, Commonwealth Seniors Health card holders, Veteran Affairs card holders, cervical screenings, and patients aged 16 years and under, are eligible for 50% off the consumables fee.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bulk Billing & Mission -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Bulk Billing & Our Mission</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>Our motto is 'service to humanity', so Ruby Medical Centre offers bulk billing to people 16 years and under, and to concession card holders. We understand that families face financial hardship from time to time. We are here to serve the community by providing easily accessible medical facilities.</p>
-                        <p>Bulk billing is a payment option under the Medicare system of universal health insurance in Australia. It can cover a prescribed range of health services as listed in the Medicare Benefits Schedule and is at the discretion of the health service provider.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Practice Information -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Practice Information</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Entity Name</strong></td>
-                                    <td>Vaidya Narayana Pty Ltd</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>ABN</strong></td>
-                                    <td>71 641 371 039</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>HPI-O</strong></td>
-                                    <td>8003625833404316</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Practice Address</strong></td>
-                                    <td>128 Hampton Street, Bridgetown WA 6255</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Phone</strong></td>
-                                    <td><a href="tel:0897866000">(08) 9786 6000</a></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Fax</strong></td>
-                                    <td>(08) 9786 6001</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Email</strong></td>
-                                    <td><a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Website</strong></td>
-                                    <td>www.rubymedical.com.au</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Response to Patient Feedback -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Response to Patient Feedback</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Dear patient,</strong></p>
-                        <p>Ruby Medical Centre would like to let you know how we have managed and responded to some of your much appreciated feedback. Using a Patient Feedback Survey, as we continue to do, the following has been discussed and actioned:</p>
-
-                        <h4 style="color: #a01535; margin-top: 20px;">Costs incurred to patient</h4>
-                        <p>It has been brought to our attention that there is some confusion about costings, specifically regarding consumable costs. Consumable costs are incurred when a patient has a procedure at Ruby Medical Centre. This includes, but is not limited to – excisions, iron-infusion, Mirena insertion, Implanon insertion, etc. In response to this concern, Ruby Medical Centre has updated our price schedule. You can find our price schedule in the clinic's reception area, and on our website. Our practitioners will also keep a price schedule in their rooms and will inform patients of costs prior to undergoing any procedure.</p>
-
-                        <h4 style="color: #a01535; margin-top: 20px;">Amenities for children in waiting area</h4>
-                        <p>Some patients have suggested that a play-area for children would be a nice and convenient feature for our clinic. While we agree, and certainly consider this for the future, we are going to hold-off on this for the time-being due to the current situation surrounding the COVID-19 pandemic.</p>
-
-                        <h4 style="color: #a01535; margin-top: 20px;">Parking Accessibility</h4>
-                        <p>A popular aspect of concern was parking – specifically regarding the lack of ideal and convenient parking. We have put up signage, and put information on our website, letting patients know about some of the parking options that we do currently have. Patients with disability, particularly those who require wheelchair access, who are having any issues finding parking, are encouraged to contact the clinic and we can arrange alternative options for you.</p>
-
-                        <p style="margin-top: 20px;">Once again, we very much appreciate your feedback, and we will continue to use it to further improve the quality of our service to you.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Privacy Policy -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Privacy Policy</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p><strong>Ruby Medical Centre Privacy Policy</strong><br><strong>Current as of: 01/11/2021</strong></p>
-
-                        <h4 style="color: #a01535;">Introduction</h4>
-                        <p>This privacy policy is to provide information to you, our patient, on how your personal information (which includes your health information) is collected and used within our practice, and the circumstances in which we may share it with third parties.</p>
-
-                        <h4 style="color: #a01535;">Why and when your consent is necessary</h4>
-                        <p>When you register as a patient of our practice, you provide consent for our GPs and practice staff to access and use your personal information so they can provide you with the best possible healthcare. Only staff who need to see your personal information will have access to it. If we need to use your information for anything else, we will seek additional consent from you to do this.</p>
-
-                        <h4 style="color: #a01535;">Why do we collect, use, hold and share your personal information?</h4>
-                        <p>Our practice will need to collect your personal information to provide healthcare services to you. Our main purpose for collecting, using, holding, and sharing your personal information is to manage your health. We also use it for directly related business activities, such as financial claims and payments, practice audits and accreditation, and business processes (e.g. staff training).</p>
-
-                        <h4 style="color: #a01535;">What personal information do we collect?</h4>
-                        <ul>
-                            <li>Names, date of birth, addresses, contact details</li>
-                            <li>Medical information including medical history, medications, allergies, adverse events, immunisations, social history, family history and risk factors</li>
-                            <li>Medicare number (where available) for identification and claiming purposes</li>
-                            <li>Healthcare identifiers</li>
-                            <li>Health fund details</li>
-                        </ul>
-
-                        <h4 style="color: #a01535;">Dealing with us anonymously</h4>
-                        <p>You have the right to deal with us anonymously or under a pseudonym unless it is impracticable for us to do so or unless we are required or authorised by law to only deal with identified individuals.</p>
-
-                        <h4 style="color: #a01535;">How do we collect your personal information?</h4>
-                        <ul>
-                            <li>When you make your first appointment our practice staff will collect your personal and demographic information via your registration.</li>
-                            <li>During the course of providing medical services, we may collect further personal information via Electronic transfer of prescriptions (eTP), My Health Record, etc.</li>
-                            <li>We may also collect your personal information when you visit our website, send us an email or SMS, telephone us, make an online appointment or communicate with us using social media.</li>
-                            <li>In some circumstances personal information may also be collected from other sources including your guardian, other healthcare providers, your health fund, Medicare, or the Department of Veterans' Affairs.</li>
-                        </ul>
-
-                        <h4 style="color: #a01535;">When, why, and with whom do we share your personal information?</h4>
-                        <p>We sometimes share your personal information with:</p>
-                        <ul>
-                            <li>Third parties who work with our practice for business purposes, such as accreditation agencies or information technology providers</li>
-                            <li>Other healthcare providers</li>
-                            <li>When it is required or authorised by law</li>
-                            <li>When it is necessary to lessen or prevent a serious threat to a patient's life, health or safety</li>
-                            <li>To assist in locating a missing person</li>
-                            <li>To establish, exercise or defend an equitable claim</li>
-                            <li>For the purpose of confidential dispute resolution</li>
-                            <li>When there is a statutory requirement to share certain personal information</li>
-                            <li>During the course of providing medical services, through eTP, My Health Record, or other means</li>
-                        </ul>
-                        <p>Only people who need to access your information will be able to do so. Our practice will not share personal information with any third party without your consent, other than in the course of providing medical services. We will not share your personal information with anyone outside Australia without your consent (unless under exceptional circumstances permitted by law). Our practice will not use your personal information for marketing without your express consent.</p>
-                        <p>We may provide de-identified data to other organisations to improve population health outcomes. You can let our reception staff know if you do not want your information included.</p>
-
-                        <h4 style="color: #a01535;">How do we store and protect your personal information?</h4>
-                        <p>Your personal information may be stored in various forms including paper records, electronic records, visual records, and audio recordings. Our practice stores all personal information securely using passwords, secure cabinets, and confidentiality agreements for staff and contractors.</p>
-
-                        <h4 style="color: #a01535;">How can you access and correct your personal information?</h4>
-                        <p>You have the right to request access to, and correction of, your personal information. Please put requests in writing and submit in-person, by postage, fax, or email. Our practice will respond within a reasonable time – typically within 7 days.</p>
-
-                        <h4 style="color: #a01535;">How can you lodge a privacy-related complaint?</h4>
-                        <p>You should express any privacy concerns in writing and submit in-person, by postage, fax, or email. Our practice will respond within a reasonable time – typically within 7 days. You may also contact the OAIC at www.oaic.gov.au or call 1300 363 992.</p>
-
-                        <h4 style="color: #a01535;">Policy review statement</h4>
-                        <p>This privacy policy will be reviewed regularly to ensure it is in accordance with any changes that may occur.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Communication Policy -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Communication Policy</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <h4 style="color: #a01535;">Test Results</h4>
-                        <p>All test results go through a recall system and are reviewed by the doctors. Results, including pathology and imaging, are the responsibility of the patient. Ruby Medical Centre will attempt to contact patients regarding abnormal test results, but we are not always able to make contact at first or second attempt. If you have concerns or would like to know your results, please contact us for an appointment, or you can have the results emailed to you, or left at reception for you to collect. Reception staff and nurses require your doctor's permission before they can hand over the results to you, so there will be a short waiting period. Please note – If you would like to discuss your results with a doctor, a normal appointment fee will apply.</p>
-
-                        <h4 style="color: #a01535;">Returning telephone calls & electronic communications</h4>
-                        <p>Reception staff will return all queries, phone calls, and emails, as soon as possible, and so far as they are authorised to. If you contact reception wanting to know something from your doctor, reception will forward this request on, and get back to you at the earliest opportunity. Please note – it may take up to 48 hours for us to get back to you. If you believe your request is urgent, please let us know.</p>
-
-                        <h4 style="color: #a01535;">Complaints & Suggestions</h4>
-                        <p>If you have any problems, concerns, suggestions, etc., we would very much like to hear them. You can discuss with the doctor, nurse, or reception staff. If you would prefer – you can submit in writing via post, email, fax, or you can place in our Complaints/Suggestions box, located at the reception desk. Alternatively, you can contact the Health and Disability Services Complaints Office:</p>
-                        <ul>
-                            <li><strong>Address:</strong> GPO Box B61, Perth WA 6001</li>
-                            <li><strong>Phone:</strong> (08) 6551 7600</li>
-                            <li><strong>Country Free Call:</strong> 1800 813 583</li>
-                            <li><strong>TTY:</strong> (08) 6551 7640</li>
-                            <li><strong>Email:</strong> mail@hadsco.wa.gov.au</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Feedback & Contact Information -->
-            <div class="accordion">
-                <div class="accordion-header">
-                    <h3>Feedback & Contact Information</h3>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-body">
-                        <p>All of our GPs are members of the Royal Australian College of General Practitioners and regularly participate in the College's Quality Assurance and Continuing Professional Development Program. They are highly experienced in family medicine, women's health, men's health, sexual health, mental health, dermatology, and skin cancer.</p>
-                        <p>Our administrative staff and registered nurses are very dedicated, polite and friendly and you will feel reassured based on their empathy, knowledge and efficiency.</p>
-                        <p><strong>Your feedback is important to us. If you have any suggestions, complaints, or appraisals, please place them in the Suggestion Box located in our surgery, or you can:</strong></p>
-                        <ul>
-                            <li>Email us at <a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></li>
-                            <li>Email our practice manager at <a href="mailto:rubygpcare@gmail.com">rubygpcare@gmail.com</a></li>
-                            <li>Call us on <a href="tel:0897866000">(08) 9786 6000</a></li>
-                            <li>Fax us on (08) 9786 6001</li>
-                            <li>Post to: Ruby Medical Centre, 128 Hampton Street, Bridgetown WA 6255</li>
-                        </ul>
+                    <div class="hero-info-card">
+                        <div class="hero-info-icon"><i class="fa-solid fa-hospital"></i></div>
+                        <div><div class="hero-info-label">Billing</div><div class="hero-info-value">Medicare Bulk Billing</div></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- SERVICES PAGE -->
-        <div id="services" class="page">
-            <h2>Our Services</h2>
+    </div>
 
-            <!-- Family Medicine -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Family Medicine</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Family-medicine.jpg" alt="Family Medicine" class="service-photo">
-                        <div class="service-description">
-                            <p>Ruby Medical Centre specialises in Family Medicine providing comprehensive primary healthcare for individuals and families across all ages, genders, diseases and conditions. Care is provided on a continuing basis with an emphasis on disease prevention and health promotion. Your family doctor is an important part of helping manage your family's health and well-being.</p>
-                        </div>
+    <!-- ========== ABOUT ========== -->
+    <div id="about" class="page">
+        <div class="tab-page">
+            <div class="container" style="display:flex; flex-direction:column; flex:1;">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <div class="page-label">About Us</div>
+                        <div class="page-title">Ruby Medical Centre</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Women's Health -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Women's Health</h3>
-                    <span class="service-toggle">▼</span>
+                <div class="about-grid">
+                    <div class="about-card reveal"><span class="about-card-tag tag-info">Location</span><h3>Parking & Facilities <i class="fa-solid fa-chevron-down"></i></h3><p>Parallel street parking on Hampton Street, parking bay next to the Bakery (2 min walk), behind IGA, and Shire parking north (1 min walk). Wheelchair access patients can contact us for alternative options. Houses Pathology, Psychology, Audiology, Osteopathy, co-located with 777 Pharmacy.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-fees">Fees</span><h3>Normal Hours Fees <i class="fa-solid fa-chevron-down"></i></h3><p>Mon–Fri 8am–5pm. Standard Consultation $45/$90 · Long $60/$145 · Extended $75/$200 · Telehealth $30/$75 · Medical Certificate $10/$20 · Fitness to Drive $160 · Aviation $210 · Firearms $250 · Pre-Employment $160. Concession/Non-Medicare rates.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-fees">Fees</span><h3>After Hours Fees <i class="fa-solid fa-chevron-down"></i></h3><p>Mon–Fri before 8am/after 6pm, Sat before 8am/after 1pm, Sun/Public Holidays. Standard $103.80 (rebate $55.80) · Long $155.70 (rebate $95.70) · Extended $209.20 (rebate $134.20).</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-fees">Fees</span><h3>Consumables Fees <i class="fa-solid fa-chevron-down"></i></h3><p>Biopsy $30 · Excision small $60, med $80, large $100-$120 · Flap repair $120 · Implanon $40-$60 · Mirena/IUD $40-$120 · Iron infusion $100 · Cryo $30 · ECG $30 · Ear syringing $30 · BP monitor $50 · Spirometry $20. Concession holders get 50% off.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-billing">Billing</span><h3>Bulk Billing & Mission <i class="fa-solid fa-chevron-down"></i></h3><p>Our motto is 'service to humanity'. Bulk billing for patients 16 and under and concession card holders. Payments on the day by cash or Eftpos. All fees at Doctor's discretion. 3 hours notice for cancellations. Missed appointments may incur a fee.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-info">Info</span><h3>Practice Information <i class="fa-solid fa-chevron-down"></i></h3><p>Entity: Vaidya Narayana Pty Ltd · ABN: 71 641 371 039 · HPI-O: 8003625833404316 · Address: 128 Hampton Street, Bridgetown WA 6255 · Phone: (08) 9786 6000 · Fax: (08) 9786 6001 · Email: reception@rubymedical.com.au</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-policy">Policy</span><h3>Privacy Policy <i class="fa-solid fa-chevron-down"></i></h3><p>We collect personal information to provide healthcare services. Only staff who need access will have it. We share with other providers, accreditation agencies, and when required by law. Stored securely. You can request access/correction in writing — response within 7 days. Complaints to OAIC: 1300 363 992.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-policy">Policy</span><h3>Communication Policy <i class="fa-solid fa-chevron-down"></i></h3><p>Test results reviewed by doctors — we'll attempt contact for abnormal results. Phone queries returned within 48 hours. Complaints: discuss with staff, email reception@rubymedical.com.au, or contact HADSCO: (08) 6551 7600 / 1800 813 583.</p></div>
+
+                    <div class="about-card reveal"><span class="about-card-tag tag-feedback">Feedback</span><h3>Patient Feedback <i class="fa-solid fa-chevron-down"></i></h3><p>We've updated our price schedule for clarity on consumable costs. Children's play area planned post-COVID. Parking signage installed. Disability access available — contact us. Feedback: <a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a> or <a href="mailto:rubygpcare@gmail.com">rubygpcare@gmail.com</a></p></div>
+
                 </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Womens-Health.jpg" alt="Women's Health" class="service-photo">
-                        <div class="service-description">
-                            <p>We offer woman-centred medical care that aims to promote women's health through contraception, family planning options & counselling, fertility counselling, addressing menstrual & menopause issues, screening for sexually transmissible infections, care before, during and after pregnancy, cervical cancer screening (Pap Smears), and mental health issues.</p>
-                        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== SERVICES ========== -->
+    <div id="services" class="page">
+        <div class="tab-page">
+            <div class="container" style="display:flex; flex-direction:column; flex:1;">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <div class="page-label">What We Offer</div>
+                        <div class="page-title">Our Services</div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Men's Health -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Men's Health</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Mens-Health.jpg" alt="Men's Health" class="service-photo">
-                        <div class="service-description">
-                            <p>Most men often ignore their health unless they are very sick. We provide a comprehensive Men's Health Check which is designed for males aged 40 to 74 years of age, and focus on preventative health strategies to maintain optimum health.</p>
-                        </div>
+                <div class="services-grid">
+                    <!-- Row 1: 4 cards -->
+                    <div class="services-row">
+                        <div class="service-card reveal" data-name="Family Medicine" data-photo="images/services/Family-medicine.jpg" data-desc="Ruby Medical Centre specialises in Family Medicine providing comprehensive primary healthcare for individuals and families across all ages, genders, diseases and conditions. Care is provided on a continuing basis with an emphasis on disease prevention and health promotion. Your family doctor is an important part of helping manage your family's health and well-being."><img src="images/services/Family-medicine.jpg" alt="Family Medicine"><div class="service-card-body"><h3>Family Medicine</h3></div></div>
+                        <div class="service-card reveal" data-name="Women's Health" data-photo="images/services/Womens-Health.jpg" data-desc="We offer woman-centred medical care that aims to promote women's health through contraception, family planning options &amp; counselling, fertility counselling, addressing menstrual &amp; menopause issues, screening for sexually transmissible infections, care before, during and after pregnancy, cervical cancer screening (Pap Smears), and mental health issues."><img src="images/services/Womens-Health.jpg" alt="Women's Health"><div class="service-card-body"><h3>Women's Health</h3></div></div>
+                        <div class="service-card reveal" data-name="Men's Health" data-photo="images/services/Mens-Health.jpg" data-desc="Most men often ignore their health unless they are very sick. We provide a comprehensive Men's Health Check which is designed for males aged 40 to 74 years of age, and focus on preventative health strategies to maintain optimum health."><img src="images/services/Mens-Health.jpg" alt="Men's Health"><div class="service-card-body"><h3>Men's Health</h3></div></div>
+                        <div class="service-card reveal" data-name="Kid's Health" data-photo="images/services/Kids-Health.jpg" data-desc="We care for new born babies, children and teenagers, including care for acute illness, immunisations, chronic disease management and routine health checks. It is distressing for some children to attend doctors, but we strive for your child's comfort by making the visit as relaxing as possible for them. Routine immunisations are registered with the Australian Childhood Immunisation Register."><img src="images/services/Kids-Health.jpg" alt="Kid's Health"><div class="service-card-body"><h3>Kid's Health</h3></div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Kid's Health -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Kid's Health</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Kids-Health.jpg" alt="Kid's Health" class="service-photo">
-                        <div class="service-description">
-                            <p>We care for new born babies, children and teenagers, including care for acute illness, immunisations, chronic disease management and routine health checks. It is distressing for some children to attend doctors, but we strive for your child's comfort by making the visit as relaxing as possible for them. Routine immunisations are registered with the Australian Childhood Immunisation Register.</p>
-                        </div>
+                    <!-- Row 2: 3 cards -->
+                    <div class="services-row">
+                        <div class="service-card reveal" data-name="Sexual Health" data-photo="images/services/Sexual-Health.jpg" data-desc="A private, non-judgemental and confidential consult to address sexual health check if you have any concerns for your sexual health."><img src="images/services/Sexual-Health.jpg" alt="Sexual Health"><div class="service-card-body"><h3>Sexual Health</h3></div></div>
+                        <div class="service-card reveal" data-name="Skin Cancer Clinic" data-photo="images/services/Skin-Cancer-Clinic.jpg" data-desc="The clinic offers patients good preventative measures, reliable quality treatment and follow up through a full range of diagnostic and treatment services for skin cancers including cryotherapy, biopsies, surgical excision, skin flap repairs, curettage and diathermy. Regular screening of skin spots and moles can help with early detection and treatment for skin cancer and melanoma. Melanoma is the most common cancer in people aged 15–44 years, accounting for 80% of all newly diagnosed cancers. Not all skin cancers are obvious or noticeable, and an annual comprehensive skin screening is the best way to protect you and your loved ones from malignancies."><img src="images/services/Skin-Cancer-Clinic.jpg" alt="Skin Cancer Clinic"><div class="service-card-body"><h3>Skin Cancer Clinic</h3></div></div>
+                        <div class="service-card reveal" data-name="Immunisations" data-photo="images/services/Immunisations.jpg" data-desc="We provide all childhood immunisations, catch up immunisations, travel immunisations and occupational health immunisations as per the latest revised Australian Immunisation Program. Our nurses and GPs are fully certified vaccination providers."><img src="images/services/Immunisations.jpg" alt="Immunisations"><div class="service-card-body"><h3>Immunisations</h3></div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Sexual Health -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Sexual Health</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Sexual-Health.jpg" alt="Sexual Health" class="service-photo">
-                        <div class="service-description">
-                            <p>A private, non-judgemental and confidential consult to address sexual health check if you have any concerns for your sexual health.</p>
-                        </div>
+                    <!-- Row 3: 2 cards -->
+                    <div class="services-row">
+                        <div class="service-card reveal" data-name="Travel Medicine" data-photo="images/services/Travel-Medicine.jpg" data-desc="We provide complete health education and information before your travel and may include travel vaccinations, malaria prevention, and education."><img src="images/services/Travel-Medicine.jpg" alt="Travel Medicine"><div class="service-card-body"><h3>Travel Medicine</h3></div></div>
+                        <div class="service-card reveal" data-name="Pre-Employment &amp; WorkCover" data-photo="images/services/Pre-employment-check-and-Workers-compensation.jpg" data-desc="We offer management and prevention of injuries, return to work planning, pre-employment medicals and WorkCover consultations. We treat and help injured workers to return back to the workplace as soon as it is safe to do so."><img src="images/services/Pre-employment-check-and-Workers-compensation.jpg" alt="Pre-Employment"><div class="service-card-body"><h3>Pre-Employment & WorkCover</h3></div></div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Skin Cancer Clinic -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Skin Cancer Clinic</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Skin-Cancer-Clinic.jpg" alt="Skin Cancer Clinic" class="service-photo">
-                        <div class="service-description">
-                            <p>The clinic offers patients good preventative measures, reliable quality treatment and follow up through a full range of diagnostic and treatment services for skin cancers including cryotherapy, biopsies, surgical excision, skin flap repairs, curettage and diathermy. Regular screening of skin spots and moles can help with early detection and treatment for skin cancer and melanoma. Melanoma is the most common cancer in people aged 15–44 years, accounting for 80% of all newly diagnosed cancers. Not all skin cancers are obvious or noticeable, and an annual comprehensive skin screening is the best way to protect you and your loved ones from malignancies.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Immunisations -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Immunisations</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Immunisations.jpg" alt="Immunisations" class="service-photo">
-                        <div class="service-description">
-                            <p>We provide all childhood immunisations, catch up immunisations, travel immunisations and occupational health immunisations as per the latest revised Australian Immunisation Program. Our nurses and GPs are fully certified vaccination providers.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Travel Medicine -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Travel Medicine</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Travel-Medicine.jpg" alt="Travel Medicine" class="service-photo">
-                        <div class="service-description">
-                            <p>We provide complete health education and information before your travel and may include travel vaccinations, malaria prevention, and education.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pre-Employment & Workers Compensation -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Pre-Employment Check & Workers Compensation</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Pre-employment-check-and-Workers-compensation.jpg" alt="Pre-Employment Check & Workers Compensation" class="service-photo">
-                        <div class="service-description">
-                            <p>We offer management and prevention of injuries, return to work planning, pre-employment medicals and WorkCover consultations. We treat and help injured workers to return back to the workplace as soon as it is safe to do so.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Osteoporosis & Chronic Disease Management -->
-            <div class="service-item">
-                <div class="service-header">
-                    <h3>Osteoporosis & Chronic Disease Management</h3>
-                    <span class="service-toggle">▼</span>
-                </div>
-                <div class="service-content">
-                    <div class="service-body">
-                        <img src="images/services/Osteoporosis.jpg" alt="Osteoporosis" class="service-photo">
-                        <div class="service-description">
-                            <p>It is important to be aware of your bone health, as osteoporosis can often have no symptoms until a fracture occurs. If you would like to find out if you are at risk, speak to your doctor or the practice nurse. We cater for urgent, non-urgent, complex, chronic disease management, health checks, insurance and driver's medicals, case conference consultations, and interpreter services. We run a Recall and Reminder system for both routine and significant health issues. We also maintain My Health Record.</p>
-                        </div>
+                    <!-- Row 4: 1 card -->
+                    <div class="services-row">
+                        <div class="service-card reveal" data-name="Chronic Disease Management" data-photo="images/services/Osteoporosis.jpg" data-desc="It is important to be aware of your bone health, as osteoporosis can often have no symptoms until a fracture occurs. If you would like to find out if you are at risk, speak to your doctor or the practice nurse. We cater for urgent, non-urgent, complex, chronic disease management, health checks, insurance and driver's medicals, case conference consultations, and interpreter services. We run a Recall and Reminder system for both routine and significant health issues. We also maintain My Health Record."><img src="images/services/Osteoporosis.jpg" alt="Chronic Disease"><div class="service-card-body"><h3>Chronic Disease</h3></div></div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- OUR DOCTORS PAGE -->
-        <div id="doctors" class="page">
-            <h2>Our Doctors & Team</h2>
-
-            <!-- Doctors Section -->
-            <div class="doctor-category">
-                <div class="category-title">
-                    <span class="category-icon">👨‍⚕️</span>
-                    Doctors
-                </div>
-
-                <!-- Dr Nandhini Rangarajan -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Dr-Nandhini-Rangarajan.jpg" alt="Dr Nandhini Rangarajan" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Dr Nandhini Rangarajan</h3>
-                        <div class="doctor-title">General Practitioner</div>
-                        <p class="doctor-bio">Dr Nandhini Rangarajan has been a GP for over 25 years. She enjoys all aspects of general practice and has special interest in women's health, paediatrics, minor surgical procedures, preventive and public health. Her hobby is drawing, painting and enjoying the nature. Being a fitness enthusiast, she practises and trains Yoga. She likes to read and explore history, religions, spirituality and meditation.</p>
+    <!-- ========== DOCTORS ========== -->
+    <div id="doctors" class="page">
+        <div class="tab-page">
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <div class="page-label">Meet the Team</div>
+                        <div class="page-title">Our People</div>
                     </div>
                 </div>
 
-                <!-- Dr Peter Donald McKenna -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Dr-Peter-Donald-McKenna.jpg" alt="Dr Peter Donald McKenna" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Dr Peter Donald McKenna</h3>
-                        <div class="doctor-title">General Practitioner</div>
-                        <div class="doctor-qualifications">MBBS, PGDipHealth Promotion, FRACGP, MPHTM, FACRRM, AFRACMA</div>
-                        <p class="doctor-bio">Born and bred in Bunbury, WA. Graduated from University of WA in 1983 and did his internship at Fremantle Hospital. Always wanted to work in rural and remote Australia. Worked in isolated Kwazulu in South Africa for 2 years to learn further skills in surgery, obstetrics, anaesthetics and emergency medicine. Returned to Australia in 1987 to work for 12 months in Christmas Island and Pilbara RFDS. Worked for 7 years in the Torres Strait including amongst the beautiful island communities. Further studies in Tropical Medicine and Public Health in Townsville in 1994 before commencing 25 years at Innisfail Hospital (55 beds) in Far North Queensland. Moved back to WA just pre-COVID lockdowns and has together with his family decided to resettle in the gorgeous South West. Dr McKenna has a passion for teaching, geriatrics, paediatrics, obstetrics, and Aboriginal and Torres Strait Islander health, and palliative care. Other interests include fishing, diving, gardening and hiking.</p>
-                    </div>
+                <div class="team-grid">
+                    <div class="team-member reveal" data-name="Dr Nandhini Rangarajan" data-role="General Practitioner" data-role-class="role-doctor" data-photo="images/doctors/Dr-Nandhini-Rangarajan.jpg" data-bio="Dr Nandhini Rangarajan has been a GP for over 25 years. She enjoys all aspects of general practice and has special interest in women's health, paediatrics, minor surgical procedures, preventive and public health. Her hobby is drawing, painting and enjoying the nature. Being a fitness enthusiast, she practises and trains Yoga. She likes to read and explore history, religions, spirituality and meditation."><span class="team-member-dot" style="background:var(--ruby)"></span><img src="images/doctors/Dr-Nandhini-Rangarajan.jpg" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Dr Nandhini Rangarajan</div><div class="team-member-role role-doctor">General Practitioner</div><div class="team-member-bio">Dr Nandhini Rangarajan has been a GP for over 25 years. She enjoys all aspects of general practice and has special interest in women's health, paediatrics, minor surgical procedures, preventive and public health. Her hobby is drawing, painting and enjoying the nature. Being a fitness enthusiast, she practises and trains Yoga. She likes to read and explore history, religions, spirituality and meditation.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Dr Peter Donald McKenna" data-role="General Practitioner" data-role-class="role-doctor" data-quals="MBBS, PGDipHealth Promotion, FRACGP, MPHTM, FACRRM, AFRACMA" data-photo="images/doctors/Dr-Peter-Donald-McKenna.jpg" data-bio="Born and bred in Bunbury, WA. Graduated from University of WA in 1983 and did his internship at Fremantle Hospital. Always wanted to work in rural and remote Australia. Worked in isolated Kwazulu in South Africa for 2 years to learn further skills in surgery, obstetrics, anaesthetics and emergency medicine. Returned to Australia in 1987 to work for 12 months in Christmas Island and Pilbara RFDS. Worked for 7 years in the Torres Strait including amongst the beautiful island communities. Further studies in Tropical Medicine and Public Health in Townsville in 1994 before commencing 25 years at Innisfail Hospital (55 beds) in Far North Queensland. Moved back to WA just pre-COVID lockdowns and has together with his family decided to resettle in the gorgeous South West. Dr McKenna has a passion for teaching, geriatrics, paediatrics, obstetrics, and Aboriginal and Torres Strait Islander health, and palliative care. Other interests include fishing, diving, gardening and hiking."><span class="team-member-dot" style="background:var(--ruby)"></span><img src="images/doctors/Dr-Peter-Donald-McKenna.jpg" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Dr Peter McKenna</div><div class="team-member-role role-doctor">General Practitioner</div><div class="team-member-quals">MBBS, PGDipHealth Promotion, FRACGP, MPHTM, FACRRM, AFRACMA</div><div class="team-member-bio">Born and bred in Bunbury, WA. Graduated from University of WA in 1983. Worked in Kwazulu, South Africa, Christmas Island, Pilbara RFDS, Torres Strait, and 25 years at Innisfail Hospital. Passionate about teaching, geriatrics, paediatrics, obstetrics, Indigenous health, and palliative care.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Dr Jo-An Dovaston" data-role="General Practitioner" data-role-class="role-doctor" data-photo="images/doctors/Dr-Jo-An-Dovaston.png" data-bio="Dr Jo-An obtained her Medical Degree from University of Santo Tomas – Faculty of Medicine and Surgery, Philippines in 2004. She practised as a rural GP in the remote islands of Aklan and Romblon in the Philippines after she qualified as a doctor. She migrated to the United Kingdom in 2011 and completed her Specialty Training in General Practice in 2017 under the Royal College of General Practitioners – East of England Deanery. The Royal Australian College of General Practitioners granted her Fellowship in 2017 as well. She is a well-rounded, compassionate GP who has been practising in Australia since 2018. She previously worked as a GP in Rockingham Medical Centre and as a Quarantine GP for WA Health in 2020. In 2021 she was employed by Top End Health to work for Northern Territory's Centre for Disease Control as Head of Tuberculosis Department. In January 2022, she re-opened the Manjimup General Practice. She has special interest in minor surgery and skin cancer, having worked as a Fellow in Plastic Surgery at Addenbrookes Hospital in Cambridge, England from 2013 to 2014. She also has special interest in Transgender Health. Her experience spans Adult Medicine, Paediatric Medicine, Psychiatry, Obstetrics and Gynaecology, Emergency Medicine, Critical Care Medicine, Urology, Cardiology, Oncology, Haematology, Infectious Disease, General Surgery and Trauma. She was also involved in provision of health services for Aboriginal patients in Darwin."><span class="team-member-dot" style="background:var(--ruby)"></span><img src="images/doctors/Dr-Jo-An-Dovaston.png" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Dr Jo-An Dovaston</div><div class="team-member-role role-doctor">General Practitioner</div><div class="team-member-bio">Medical Degree from University of Santo Tomas, Philippines. FRACGP Fellow since 2017. Special interest in minor surgery, skin cancer, and Transgender Health. Former Head of TB Department, NT Centre for Disease Control. Experience spans Adult Medicine, Paediatrics, Psychiatry, O&G, Emergency, Surgery and more.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Alice" data-role="Enrolled Nurse" data-role-class="role-nurse" data-photo="images/doctors/Nurse-Alice.png" data-bio="Alice is a dedicated Enrolled Nurse with 2 years of experience. She has a keen interest in maternity care and skin health, working closely with Dr Jo to assist with lesion identification and excisions. Alice is trained in childhood immunisations, pathology, and IV infusions. She is passionate about providing compassionate care, always ready to listen, offer advice, and have a chat with patients. Alice is committed to continuously expanding her clinical skills and ensuring patients feel heard and supported."><span class="team-member-dot" style="background:var(--teal)"></span><img src="images/doctors/Nurse-Alice.png" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Alice</div><div class="team-member-role role-nurse">Enrolled Nurse</div><div class="team-member-bio">Dedicated Enrolled Nurse with 2 years of experience. Keen interest in maternity care and skin health, working closely with Dr Jo on lesion identification and excisions. Trained in childhood immunisations, pathology, and IV infusions. Passionate about compassionate care.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Emma" data-role="Registered Nurse" data-role-class="role-nurse" data-photo="images/doctors/Emma.png" data-bio="Emma is originally from New Zealand, and now lives in Bridgetown with her young family. She is a Registered Nurse with experience primarily in community health. Her areas of interest include child and family health, immunisation, women's health and breastfeeding support."><span class="team-member-dot" style="background:var(--teal)"></span><img src="images/doctors/Emma.png" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Emma</div><div class="team-member-role role-nurse">Registered Nurse</div><div class="team-member-bio">Originally from New Zealand, now living in Bridgetown with her young family. Registered Nurse with experience primarily in community health. Interests include child and family health, immunisation, women's health and breastfeeding support.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Dr Muthu Nachiappan JP" data-role="Consulting Audiologist" data-role-class="role-allied" data-quals="MSc (Sp &amp; Hg), AuD" data-photo="images/doctors/Dr.-Muthu-Nachiappan-JP.jpg" data-bio="Dr Muthu completed his post graduation in Audiology and Speech Pathology from the prestigious All India Institute of Speech and Hearing, Mysore in 1999. He completed his Doctor of Audiology from the University of Florida in 2013. He started his career as the first Audiologist at Vikram ENT Hospital and Integral Ear Institute, Coimbatore, India in 1999, gaining experience in dealing with adult and paediatric speech and hearing disorders, hearing aids and cochlear implants. He was trained in cochlear implantation at the Royal Victoria Eye and Ear Institute, Melbourne in 1999. He worked as an Educational Audiologist at the Singapore School for the Deaf from 2001 to 2003, then moved to Australia in 2003. He has worked as an Audiologist across Melbourne, Sydney and Perth with major Hearing Service Providers. He set up his own Independent Private Audiology Practice on 14 January 2016, providing visiting audiological services in the regional towns of Manjimup, Bridgetown, Nannup and Boyup Brook. Dr Muthu is a Justice of the Peace, offering JP services through which he reaches out to more people in the wider community."><span class="team-member-dot" style="background:var(--purple)"></span><img src="images/doctors/Dr.-Muthu-Nachiappan-JP.jpg" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Dr Muthu Nachiappan JP</div><div class="team-member-role role-allied">Audiologist</div><div class="team-member-quals">MSc (Sp & Hg), AuD</div><div class="team-member-bio">Doctor of Audiology from University of Florida. 25+ years experience across India, Singapore, and Australia. Provides visiting audiological services in Manjimup, Bridgetown, Nannup and Boyup Brook. Justice of the Peace.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Roger Coghill" data-role="Psychologist" data-role-class="role-allied" data-photo="images/doctors/Roger-Coghill.png" data-bio="Roger is a registered Psychologist and trained Primary School Teacher. He has worked with Anglicare NT, supporting homeless young people. Roger was also the Coordinator of Pastoral Care for Mission Australia's WA staff members. For the past 18 years Roger has worked as a school Psychologist with The Department of Education, as a Senior Consultant Psychologist with AISWA (Association of Independent Schools of WA), and now in private practice. Roger provides a friendly, safe and relaxed therapeutic environment to support adults and adolescents with: sleep related difficulties, stress management, adjusting to life's stressors, anxiety, anger management, employment related issues, self-harm and suicidal ideation. Roger can assist parents with school-related issues including attendance, school refusal, academic difficulties and study/exam stress. Roger also provides practical therapy, information and support to families with children who have ADHD. Roger is a registered specialist provider with Medicare and a member of the Australian Psychological Society (APS). Telehealth (via telephone or Zoom) as well as walk and talk sessions are also provided."><span class="team-member-dot" style="background:var(--purple)"></span><img src="images/doctors/Roger-Coghill.png" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Roger Coghill</div><div class="team-member-role role-allied">Psychologist</div><div class="team-member-bio">Registered Psychologist. 18+ years experience. Supports adults and adolescents with sleep difficulties, stress, anxiety, anger management, self-harm. ADHD support for families. Medicare registered. Telehealth and walk-and-talk sessions available.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Emma Boyes" data-role="Pelvic Health Physiotherapist" data-role-class="role-allied" data-quals="Empelvic Physiotherapy" data-photo="images/doctors/Emma-Boyes.png" data-bio="Emma Boyes is an APA Titled Continence and Pelvic Health Physiotherapist with experience in managing a wide range of pelvic health conditions across the lifespan. She holds a Masters of Clinical Physiotherapy (Continence and Pelvic Health) from Curtin University and offers evidence-based, person-centred care in both in-person and Telehealth settings. Emma works collaboratively with GPs, gynaecologists, midwives and other healthcare providers to support patients throughout pregnancy, postpartum recovery, menopause, pelvic surgery and pelvic floor dysfunction. She is committed to improving access to high-quality pelvic health physiotherapy in regional WA and currently consults fortnightly in Bridgetown, with additional availability via Telehealth."><span class="team-member-dot" style="background:var(--purple)"></span><img src="images/doctors/Emma-Boyes.png" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Emma Boyes</div><div class="team-member-role role-allied">Pelvic Health Physio</div><div class="team-member-quals">Empelvic Physiotherapy</div><div class="team-member-bio">APA Titled Continence and Pelvic Health Physiotherapist. Masters from Curtin University. Supports pregnancy, postpartum recovery, menopause, pelvic surgery and pelvic floor dysfunction. Consults fortnightly in Bridgetown + Telehealth.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Western Diagnostic Pathology" data-role="Pathology Services" data-role-class="role-phlebotomy" data-photo="images/doctors/Western-Diagnostic-Pathology.jpg" data-bio="'Your trusted partner in pathology diagnostics – Over 200 collection centres across Western Australia and Northern Territory.' Our experienced collector at Ruby Medical Centre is Junko."><span class="team-member-dot" style="background:var(--gold)"></span><img src="images/doctors/Western-Diagnostic-Pathology.jpg" class="team-member-img" alt=""><div class="team-member-info"><div class="team-member-name">Western Diagnostic Pathology</div><div class="team-member-role role-phlebotomy">Pathology Services</div><div class="team-member-bio">Your trusted partner in pathology diagnostics – Over 200 collection centres across Western Australia and Northern Territory. Our experienced collector at Ruby Medical Centre is Junko.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Junko Luscombe" data-role="Phlebotomist" data-role-class="role-phlebotomy" data-bio="Junko is a phlebotomist with 5 years of experience. She has skills in performing blood collections and the knowledge to provide support to each individual patient's needs. She is cooperative with teams and passionate about providing excellent patient care."><span class="team-member-dot" style="background:var(--gold)"></span><div class="team-member-placeholder">Photo soon</div><div class="team-member-info"><div class="team-member-name">Junko Luscombe</div><div class="team-member-role role-phlebotomy">Phlebotomist</div><div class="team-member-bio">Phlebotomist with 5 years of experience in blood collections. Passionate about providing excellent patient care and support to each individual patient's needs.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Michelle Studd" data-role="Receptionist" data-role-class="role-reception" data-bio="If you hear laughter echoing through the clinic, chances are Michelle is nearby. As one of our friendly and dedicated receptionists, Michelle is passionate about patient care, where her warm smile and calming presence can make even the most nervous visitor feel at ease. She sits at the front and centre when it comes to putting patients first. Michelle can get you started when it comes to seeing one of our amazing doctors or providing a much-needed morale boost. If laughter is the best medicine, then Michelle's doing double duty."><span class="team-member-dot" style="background:var(--blue)"></span><div class="team-member-placeholder">Photo soon</div><div class="team-member-info"><div class="team-member-name">Michelle Studd</div><div class="team-member-role role-reception">Receptionist</div><div class="team-member-bio">If you hear laughter echoing through the clinic, chances are Michelle is nearby. Passionate about patient care with a warm smile and calming presence. If laughter is the best medicine, then Michelle's doing double duty.</div></div></div>
+
+                    <div class="team-member reveal" data-name="Elle Stott" data-role="Receptionist" data-role-class="role-reception" data-bio="Elle is one of the warm and welcoming faces at the front desk, making sure every patient's experience starts off on the right foot. As a dedicated Medical Receptionist, she plays a key role in keeping the day-to-day operations running smoothly — from managing appointments and handling patient inquiries to supporting the clinical team behind the scenes. Known for her supportive nature, quick thinking, and friendly attitude, Elle helps create a professional and caring environment for everyone who walks through the door."><span class="team-member-dot" style="background:var(--blue)"></span><div class="team-member-placeholder">Photo soon</div><div class="team-member-info"><div class="team-member-name">Elle Stott</div><div class="team-member-role role-reception">Receptionist</div><div class="team-member-bio">One of the warm and welcoming faces at the front desk. Keeps day-to-day operations running smoothly — managing appointments, handling patient inquiries, and supporting the clinical team. Known for her supportive nature, quick thinking, and friendly attitude.</div></div></div>
                 </div>
 
-                <!-- Dr Jo-An Dovaston -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Dr-Jo-An-Dovaston.png" alt="Dr Jo-An Dovaston" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Dr Jo-An Dovaston</h3>
-                        <div class="doctor-title">General Practitioner</div>
-                        <p class="doctor-bio">Dr Jo-An obtained her Medical Degree from University of Santo Tomas – Faculty of Medicine and Surgery, Philippines in 2004. She practised as a rural GP in the remote islands of Aklan and Romblon in the Philippines after she qualified as a doctor. She migrated to the United Kingdom in 2011 and completed her Specialty Training in General Practice in 2017 under the Royal College of General Practitioners – East of England Deanery. The Royal Australian College of General Practitioners granted her Fellowship in 2017 as well. She is a well-rounded, compassionate GP who has been practising in Australia since 2018. She previously worked as a GP in Rockingham Medical Centre and as a Quarantine GP for WA Health in 2020. In 2021 she was employed by Top End Health to work for Northern Territory's Centre for Disease Control as Head of Tuberculosis Department. In January 2022, she re-opened the Manjimup General Practice. She has special interest in minor surgery and skin cancer, having worked as a Fellow in Plastic Surgery at Addenbrookes Hospital in Cambridge, England from 2013 to 2014. She also has special interest in Transgender Health. Her experience spans Adult Medicine, Paediatric Medicine, Psychiatry, Obstetrics and Gynaecology, Emergency Medicine, Critical Care Medicine, Urology, Cardiology, Oncology, Haematology, Infectious Disease, General Surgery and Trauma. She was also involved in provision of health services for Aboriginal patients in Darwin.</p>
-                    </div>
-                </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Nurses Section -->
-            <div class="doctor-category">
-                <div class="category-title">
-                    <span class="category-icon">👩‍⚕️</span>
-                    Nurses
-                </div>
-
-                <!-- Alice -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Nurse-Alice.png" alt="Alice" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Alice</h3>
-                        <div class="doctor-title">Enrolled Nurse</div>
-                        <p class="doctor-bio">Alice is a dedicated Enrolled Nurse with 2 years of experience. She has a keen interest in maternity care and skin health, working closely with Dr Jo to assist with lesion identification and excisions. Alice is trained in childhood immunisations, pathology, and IV infusions. She is passionate about providing compassionate care, always ready to listen, offer advice, and have a chat with patients. Alice is committed to continuously expanding her clinical skills and ensuring patients feel heard and supported.</p>
+    <!-- ========== CONTACT ========== -->
+    <div id="contact" class="page">
+        <div class="tab-page">
+            <div class="container" style="display:flex; flex-direction:column; flex:1;">
+                <div class="page-header">
+                    <div class="page-header-left">
+                        <div class="page-label">Get in Touch</div>
+                        <div class="page-title">Contact Us</div>
                     </div>
                 </div>
 
-                <!-- Emma -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Emma.png" alt="Emma" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Emma</h3>
-                        <div class="doctor-title">Registered Nurse</div>
-                        <p class="doctor-bio">Emma is originally from New Zealand, and now lives in Bridgetown with her young family. She is a Registered Nurse with experience primarily in community health. Her areas of interest include child and family health, immunisation, women's health and breastfeeding support.</p>
+                <div class="contact-layout">
+                    <div class="contact-left">
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div><div class="contact-label">Phone</div><div class="contact-value"><a href="tel:0897866000">0897 866 000</a></div></div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div><div class="contact-label">Email</div><div class="contact-value"><a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></div></div>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div><div class="contact-label">Address</div><div class="contact-value">128 Hampton St, Bridgetown WA 6255</div></div>
+                        </div>
+                        <div class="contact-cta">
+                            <h3>Ready to book?</h3>
+                            <p>Book online or call us directly</p>
+                            <a href="https://healthengine.com.au/medical-centre/wa/bridgetown/ruby-medical-centre/s85752" target="_blank" class="btn"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Allied Health Section -->
-            <div class="doctor-category">
-                <div class="category-title">
-                    <span class="category-icon">⚙️</span>
-                    Allied Health
-                </div>
-
-                <!-- Dr Muthu Nachiappan -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Dr.-Muthu-Nachiappan-JP.jpg" alt="Dr Muthu Nachiappan JP" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Dr Muthu Nachiappan JP</h3>
-                        <div class="doctor-title">Consulting Audiologist</div>
-                        <div class="doctor-qualifications">MSc (Sp & Hg), AuD</div>
-                        <p class="doctor-bio">Dr Muthu completed his post graduation in Audiology and Speech Pathology from the prestigious All India Institute of Speech and Hearing, Mysore in 1999. He completed his Doctor of Audiology from the University of Florida in 2013. He started his career as the first Audiologist at Vikram ENT Hospital and Integral Ear Institute, Coimbatore, India in 1999, gaining experience in dealing with adult and paediatric speech and hearing disorders, hearing aids and cochlear implants. He was trained in cochlear implantation at the Royal Victoria Eye and Ear Institute, Melbourne in 1999. He worked as an Educational Audiologist at the Singapore School for the Deaf from 2001 to 2003, then moved to Australia in 2003. He has worked as an Audiologist across Melbourne, Sydney and Perth with major Hearing Service Providers including National Hearing Centers, Western Hearing Services, Australian Hearing, AudioClinic, and Telethon Speech and Hearing. He has also worked as a paediatric Audiologist at Princess Margaret Hospital for Children. He set up his own Independent Private Audiology Practice on 14 January 2016, providing visiting audiological services in the regional towns of Manjimup, Bridgetown, Nannup and Boyup Brook. He has also performed outreach audiological services to indigenous communities at Exmouth, Carnarvon, Meekathara, Geraldton and more. Dr Muthu is a Justice of the Peace, offering JP services through which he reaches out to more people in the wider community. He volunteers at the Perth Hindu Temple and loves teaching Tamil language to children at MuKaMai Tamil School.</p>
-                    </div>
-                </div>
-
-                <!-- Roger Coghill -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Roger-Coghill.png" alt="Roger Coghill" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Roger Coghill</h3>
-                        <div class="doctor-title">Psychologist</div>
-                        <p class="doctor-bio">Roger is a registered Psychologist and trained Primary School Teacher. He has worked with Anglicare NT, supporting homeless young people. Roger was also the Coordinator of Pastoral Care for Mission Australia's WA staff members. For the past 18 years Roger has worked as a school Psychologist with The Department of Education, as a Senior Consultant Psychologist with AISWA (Association of Independent Schools of WA), and now in private practice. Roger provides a friendly, safe and relaxed therapeutic environment to support adults and adolescents with: sleep related difficulties, stress management, adjusting to life's stressors, anxiety, anger management, employment related issues, self-harm and suicidal ideation. Roger can assist parents with school-related issues including attendance, school refusal, academic difficulties and study/exam stress. Roger also provides practical therapy, information and support to families with children who have ADHD. Roger is a registered specialist provider with Medicare and a member of the Australian Psychological Society (APS). Telehealth (via telephone or Zoom) as well as walk and talk sessions are also provided. You are welcome to contact Roger to discuss your situation.</p>
-                    </div>
-                </div>
-
-                <!-- Emma Boyes -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Emma-Boyes.png" alt="Emma Boyes" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Emma Boyes</h3>
-                        <div class="doctor-title">Pelvic Health Physiotherapist</div>
-                        <div class="doctor-qualifications">Empelvic Physiotherapy</div>
-                        <p class="doctor-bio">Emma Boyes is an APA Titled Continence and Pelvic Health Physiotherapist with experience in managing a wide range of pelvic health conditions across the lifespan. She holds a Masters of Clinical Physiotherapy (Continence and Pelvic Health) from Curtin University and offers evidence-based, person-centred care in both in-person and Telehealth settings. Emma works collaboratively with GPs, gynaecologists, midwives and other healthcare providers to support patients throughout pregnancy, postpartum recovery, menopause, pelvic surgery and pelvic floor dysfunction. She is committed to improving access to high-quality pelvic health physiotherapy in regional WA and currently consults fortnightly in Bridgetown, with additional availability via Telehealth.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Phlebotomy Section -->
-            <div class="doctor-category">
-                <div class="category-title">
-                    <span class="category-icon">🩸</span>
-                    Phlebotomy
-                </div>
-
-                <!-- Western Diagnostic Pathology -->
-                <div class="doctor-card">
-                    <img src="images/doctors/Western-Diagnostic-Pathology.jpg" alt="Western Diagnostic Pathology" class="doctor-photo">
-                    <div class="doctor-info">
-                        <h3>Western Diagnostic Pathology</h3>
-                        <div class="doctor-title">Pathology Services</div>
-                        <p class="doctor-bio">'Your trusted partner in pathology diagnostics – Over 200 collection centres across Western Australia and Northern Territory.' Our experienced collector at Ruby Medical Centre is Junko.</p>
-                    </div>
-                </div>
-
-                <!-- Junko Luscombe -->
-                <div class="doctor-card">
-                    <div class="photo-placeholder">Photo coming soon</div>
-                    <div class="doctor-info">
-                        <h3>Junko Luscombe</h3>
-                        <div class="doctor-title">Phlebotomist</div>
-                        <p class="doctor-bio">Junko is a phlebotomist with 5 years of experience. She has skills in performing blood collections and the knowledge to provide support to each individual patient's needs. She is cooperative with teams and passionate about providing excellent patient care.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reception Section -->
-            <div class="doctor-category">
-                <div class="category-title">
-                    <span class="category-icon">👋</span>
-                    Reception
-                </div>
-
-                <!-- Michelle Studd -->
-                <div class="doctor-card">
-                    <div class="photo-placeholder">Photo coming soon</div>
-                    <div class="doctor-info">
-                        <h3>Michelle Studd</h3>
-                        <div class="doctor-title">Receptionist</div>
-                        <p class="doctor-bio">If you hear laughter echoing through the clinic, chances are Michelle is nearby. As one of our friendly and dedicated receptionists, Michelle is passionate about patient care, where her warm smile and calming presence can make even the most nervous visitor feel at ease. She sits at the front and centre when it comes to putting patients first. Michelle can get you started when it comes to seeing one of our amazing doctors or providing a much-needed morale boost. If laughter is the best medicine, then Michelle's doing double duty.</p>
-                    </div>
-                </div>
-
-                <!-- Elle Stott -->
-                <div class="doctor-card">
-                    <div class="photo-placeholder">Photo coming soon</div>
-                    <div class="doctor-info">
-                        <h3>Elle Stott</h3>
-                        <div class="doctor-title">Receptionist</div>
-                        <p class="doctor-bio">Elle is one of the warm and welcoming faces at the front desk, making sure every patient's experience starts off on the right foot. As a dedicated Medical Receptionist, she plays a key role in keeping the day-to-day operations running smoothly — from managing appointments and handling patient inquiries to supporting the clinical team behind the scenes. Known for her supportive nature, quick thinking, and friendly attitude, Elle helps create a professional and caring environment for everyone who walks through the door.</p>
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=128+Hampton+St,+Bridgetown+WA+6255,+Australia&zoom=15" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- CONTACT PAGE -->
-        <div id="contact" class="page">
-            <h2>Contact Us</h2>
-
-            <!-- Contact Cards -->
-            <div class="contact-cards">
-                <div class="contact-card">
-                    <div class="contact-card-icon">📞</div>
-                    <h3>Phone</h3>
-                    <p><a href="tel:0897866000">0897 866 000</a></p>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-card-icon">📧</div>
-                    <h3>Email</h3>
-                    <p><a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a></p>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-card-icon">📍</div>
-                    <h3>Address</h3>
-                    <p>128 Hampton Street<br>Bridgetown WA 6255</p>
-                </div>
-            </div>
-
-            <!-- Google Maps Embed -->
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2873.7234567890123!2d115.32156!3d-33.94867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2a32e8c0c0c0c0c1%3A0x0!2sRuby%20Medical%20Centre%2C%20128%20Hampton%20Street%2C%20Bridgetown%20WA%206255!5e0!3m2!1sen!2sau!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer>
-        <p><strong>Ruby Medical Centre</strong><br>
-        128 Hampton Street, Bridgetown WA 6255<br>
-        <a href="tel:0897866000">Phone: (08) 9786 6000</a> | <a href="mailto:reception@rubymedical.com.au">Email: reception@rubymedical.com.au</a><br>
-        <br>
-        © 2026 Ruby Medical Centre. All rights reserved.</p>
+        <div class="footer-text">
+            <a href="tel:0897866000">(08) 9786 6000</a> · <a href="mailto:reception@rubymedical.com.au">reception@rubymedical.com.au</a> · 128 Hampton St, Bridgetown WA 6255 · &copy; 2026 Ruby Medical Centre
+        </div>
     </footer>
 
     <script>
-        // Navigation functionality
+        // Auto-unmute on first user interaction
+        const autoUnmute = () => {
+            document.querySelectorAll('video').forEach(v => { v.muted = false; });
+            const btn = document.getElementById('heroMuteBtn');
+            if (btn) btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            document.removeEventListener('click', autoUnmute);
+            document.removeEventListener('touchstart', autoUnmute);
+        };
+        document.addEventListener('click', autoUnmute);
+        document.addEventListener('touchstart', autoUnmute);
+
         const navButtons = document.querySelectorAll('.nav-btn');
         const pages = document.querySelectorAll('.page');
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('nav-menu');
 
-        navButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const pageId = button.getAttribute('data-page');
-
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-
-                // Show selected page
-                document.getElementById(pageId).classList.add('active');
-
-                // Update active button
-                navButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                button.classList.add('active');
-
-                // Close mobile menu
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-page');
+                pages.forEach(p => p.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+                navButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 navMenu.classList.remove('active');
-
-                // Scroll to top
-                window.scrollTo(0, 0);
+                window.scrollTo({top:0, behavior:'instant'});
+                setTimeout(() => {
+                    document.querySelectorAll('#'+id+' .reveal').forEach(el => {
+                        el.classList.remove('visible');
+                        observer.observe(el);
+                    });
+                }, 50);
             });
         });
 
-        // Hamburger menu toggle
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+        hamburger.addEventListener('click', () => navMenu.classList.toggle('active'));
+
+        // About cards expand
+        document.querySelectorAll('.about-card').forEach(card => {
+            card.addEventListener('click', () => card.classList.toggle('active'));
         });
 
-        // Close mobile menu when a link is clicked
-        navButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                navMenu.classList.remove('active');
+        // Create overlay and popup elements (shared by services + team)
+        const overlay = document.createElement('div');
+        overlay.className = 'team-overlay';
+        document.body.appendChild(overlay);
+
+        const popup = document.createElement('div');
+        popup.className = 'team-member-popup';
+        document.body.appendChild(popup);
+
+        let popupOpen = false;
+
+        function closePopup() {
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+            popupOpen = false;
+        }
+
+        overlay.addEventListener('click', closePopup);
+
+        // Service cards hover popup (1 second delay, same overlay system)
+        let serviceShowTimeout;
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (popupOpen) return;
+                clearTimeout(serviceShowTimeout);
+                serviceShowTimeout = setTimeout(() => {
+                    const name = card.dataset.name || '';
+                    const photo = card.dataset.photo || '';
+                    const desc = card.dataset.desc || '';
+
+                    popup.innerHTML = '<button class="popup-close">&times;</button>' +
+                        '<div class="popup-header">' +
+                        (photo ? '<img src="'+photo+'" class="popup-photo" alt="" style="width:100%;height:180px;object-fit:cover;border-radius:12px">' : '') +
+                        '</div>' +
+                        '<div class="popup-name" style="margin-top:16px;font-size:22px">'+name+'</div>' +
+                        '<div class="popup-bio" style="margin-top:12px">'+desc+'</div>';
+
+                    popup.querySelector('.popup-close').addEventListener('click', closePopup);
+                    overlay.classList.add('active');
+                    popup.classList.add('active');
+                    popupOpen = true;
+                }, 1000);
+            });
+            card.addEventListener('mouseleave', () => {
+                clearTimeout(serviceShowTimeout);
             });
         });
 
-        // Accordion functionality for About page
-        const accordions = document.querySelectorAll('.accordion');
-        accordions.forEach(accordion => {
-            const header = accordion.querySelector('.accordion-header');
-            header.addEventListener('click', () => {
-                accordion.classList.toggle('active');
+
+        // Wrap images for overflow clipping
+        document.querySelectorAll('.team-member-img').forEach(img => {
+            const wrap = document.createElement('div');
+            wrap.className = 'team-member-img-wrap';
+            img.parentNode.insertBefore(wrap, img);
+            wrap.appendChild(img);
+        });
+        document.querySelectorAll('.team-member-placeholder').forEach(ph => {
+            const wrap = document.createElement('div');
+            wrap.className = 'team-member-img-wrap';
+            ph.parentNode.insertBefore(wrap, ph);
+            wrap.appendChild(ph);
+        });
+
+        let showTimeout;
+
+        // Show centered popup on hover (1 second delay)
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', () => {
+                if (popupOpen) return;
+                clearTimeout(showTimeout);
+
+                showTimeout = setTimeout(() => {
+                    const name = member.dataset.name || '';
+                    const role = member.dataset.role || '';
+                    const roleClass = member.dataset.roleClass || '';
+                    const quals = member.dataset.quals || '';
+                    const bio = member.dataset.bio || '';
+                    const photo = member.dataset.photo || '';
+
+                    popup.innerHTML = '<button class="popup-close">&times;</button>' +
+                        '<div class="popup-header">' +
+                        (photo ? '<img src="'+photo+'" class="popup-photo" alt="" style="object-position:center 20%">' : '<div class="popup-photo-placeholder">Photo soon</div>') +
+                        '<div><div class="popup-name">'+name+'</div>' +
+                        '<div class="popup-role '+roleClass+'">'+role+'</div>' +
+                        (quals ? '<div class="popup-quals">'+quals+'</div>' : '') +
+                        '</div></div>' +
+                        '<div class="popup-bio">'+bio+'</div>';
+
+                    popup.querySelector('.popup-close').addEventListener('click', closePopup);
+                    overlay.classList.add('active');
+                    popup.classList.add('active');
+                    popupOpen = true;
+                }, 1000);
+            });
+
+            member.addEventListener('mouseleave', () => {
+                clearTimeout(showTimeout);
             });
         });
 
-        // Service item accordion functionality
-        const serviceItems = document.querySelectorAll('.service-item');
-        serviceItems.forEach(item => {
-            const header = item.querySelector('.service-header');
-            header.addEventListener('click', () => {
-                // Close other service items
-                serviceItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                item.classList.toggle('active');
-            });
-        });
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold:0.05, rootMargin:'0px 0px -30px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
